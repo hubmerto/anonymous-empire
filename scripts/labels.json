@@ -1,0 +1,211 @@
+{
+  "labels": [
+    {
+      "scene": "Detroit",
+      "labels": [
+        { "name": "Metroplex", "discogs_id": 236 },
+        { "name": "Transmat", "discogs_id": 297 },
+        { "name": "KMS Records", "discogs_id": 620 },
+        { "name": "Underground Resistance", "discogs_id": 1540 },
+        { "name": "Planet E Communications", "discogs_id": 993 },
+        { "name": "Axis Records", "discogs_id": 3027 },
+        { "name": "M-Plant", "discogs_id": 3082 },
+        { "name": "Submerge", "discogs_id": 11217 },
+        { "name": "+8 Records", "discogs_id": 2998 },
+        { "name": "Moods & Grooves", "discogs_id": 10972 },
+        { "name": "Fragile Records", "discogs_id": 2386 },
+        { "name": "Retroactive", "discogs_id": 5773 },
+        { "name": "430 West", "discogs_id": 3614 },
+        { "name": "Hardwax (Detroit)", "discogs_id": 25506 },
+        { "name": "Accelerate", "discogs_id": 8696 },
+        { "name": "Relief Records", "discogs_id": 1168 },
+        { "name": "Red Planet", "discogs_id": 2972 },
+        { "name": "Happy Records", "discogs_id": 8419 }
+      ]
+    },
+    {
+      "scene": "Chicago",
+      "labels": [
+        { "name": "Trax Records", "discogs_id": 563 },
+        { "name": "DJ International Records", "discogs_id": 1092 },
+        { "name": "Dance Mania", "discogs_id": 1170 },
+        { "name": "Cajual Records", "discogs_id": 1117 },
+        { "name": "Relief Records", "discogs_id": 1168 },
+        { "name": "Prescription Records", "discogs_id": 2476 },
+        { "name": "Guidance Recordings", "discogs_id": 2361 }
+      ]
+    },
+    {
+      "scene": "Berlin",
+      "labels": [
+        { "name": "Tresor", "discogs_id": 11 },
+        { "name": "Basic Channel", "discogs_id": 820 },
+        { "name": "Chain Reaction", "discogs_id": 776 },
+        { "name": "Ostgut Ton", "discogs_id": 43199 },
+        { "name": "BPitch Control", "discogs_id": 6439 },
+        { "name": "~scape", "discogs_id": 7774 },
+        { "name": "PAN", "discogs_id": 169042 },
+        { "name": "Killekill", "discogs_id": 208012 },
+        { "name": "Monkeytown Records", "discogs_id": 200527 },
+        { "name": "50 Weapons", "discogs_id": 188283 },
+        { "name": "Berceuse Heroique", "discogs_id": 380270 },
+        { "name": "Leisure System", "discogs_id": 264660 },
+        { "name": "Giegling", "discogs_id": 226479 },
+        { "name": "Dystopian", "discogs_id": 446437 },
+        { "name": "Token Records", "discogs_id": 204067 },
+        { "name": "Key Vinyl", "discogs_id": 175076 },
+        { "name": "Delsin Records", "discogs_id": 1690 },
+        { "name": "Clone", "discogs_id": 1283 },
+        { "name": "Figure", "discogs_id": 107505 },
+        { "name": "Stroboscopic Artefacts", "discogs_id": 228882 },
+        { "name": "Arts", "discogs_id": 735296 },
+        { "name": "Semantica Records", "discogs_id": 133135 }
+      ]
+    },
+    {
+      "scene": "Cologne",
+      "labels": [
+        { "name": "Kompakt", "discogs_id": 286 },
+        { "name": "Profan", "discogs_id": 330019 },
+        { "name": "Traum Schallplatten", "discogs_id": 5893 },
+        { "name": "Kompakt Extra", "discogs_id": 25131 },
+        { "name": "Whity", "discogs_id": 2834 }
+      ]
+    },
+    {
+      "scene": "Frankfurt",
+      "labels": [
+        { "name": "Mille Plateaux", "discogs_id": 755 },
+        { "name": "Force Inc. Music Works", "discogs_id": 653 },
+        { "name": "Playhouse", "discogs_id": 1411 },
+        { "name": "Klang Elektronik", "discogs_id": 1476 },
+        { "name": "Ongaku Musik", "discogs_id": 1412 }
+      ]
+    },
+    {
+      "scene": "Hamburg",
+      "labels": [
+        { "name": "Dial", "discogs_id": 10128 },
+        { "name": "Smallville Records", "discogs_id": 119988 },
+        { "name": "Pudel Produkte", "discogs_id": 9714 }
+      ]
+    },
+    {
+      "scene": "Munich",
+      "labels": [
+        { "name": "Ilian Tape", "discogs_id": 237889 },
+        { "name": "Disko B", "discogs_id": 1803 }
+      ]
+    },
+    {
+      "scene": "Chemnitz / Dresden",
+      "labels": [
+        { "name": "Raster-Noton", "discogs_id": 1855 },
+        { "name": "raster-media", "discogs_id": 941972 }
+      ]
+    },
+    {
+      "scene": "Sheffield / Leeds",
+      "labels": [
+        { "name": "Warp Records", "discogs_id": 23528 },
+        { "name": "Editions Mego", "discogs_id": 43774 }
+      ]
+    },
+    {
+      "scene": "London",
+      "labels": [
+        { "name": "Blackest Ever Black", "discogs_id": 254547 },
+        { "name": "Hessle Audio", "discogs_id": 75389 },
+        { "name": "Livity Sound", "discogs_id": 350729 },
+        { "name": "Hyperdub", "discogs_id": 25563 },
+        { "name": "Planet Mu", "discogs_id": 8612 },
+        { "name": "Hospital Productions", "discogs_id": 37277 },
+        { "name": "XL Recordings", "discogs_id": 4382 },
+        { "name": "NovaMute", "discogs_id": 3113 },
+        { "name": "Perc Trax", "discogs_id": 44478 },
+        { "name": "Blueprint Records", "discogs_id": 8506 },
+        { "name": "Downwards", "discogs_id": 3072 }
+      ]
+    },
+    {
+      "scene": "Ghent / Brussels",
+      "labels": [
+        { "name": "R&S Records", "discogs_id": 163 },
+        { "name": "Apollo Records", "discogs_id": 398 }
+      ]
+    },
+    {
+      "scene": "Netherlands",
+      "labels": [
+        { "name": "Clone", "discogs_id": 1283 },
+        { "name": "Delsin Records", "discogs_id": 1690 },
+        { "name": "Mord Records", "discogs_id": 412009 },
+        { "name": "Eevo Lansen", "discogs_id": 2099 }
+      ]
+    },
+    {
+      "scene": "Paris",
+      "labels": [
+        { "name": "InFiné", "discogs_id": 75267 },
+        { "name": "Ed Banger Records", "discogs_id": 21424 }
+      ]
+    },
+    {
+      "scene": "New York",
+      "labels": [
+        { "name": "L.I.E.S.", "discogs_id": 285416 },
+        { "name": "Dais Records", "discogs_id": 192959 },
+        { "name": "The Bunker New York", "discogs_id": 87982 }
+      ]
+    },
+    {
+      "scene": "Canada",
+      "labels": [
+        { "name": "Minus", "discogs_id": 2556 },
+        { "name": "Plus 8 Records", "discogs_id": 2998 },
+        { "name": "NovaMute", "discogs_id": 3113 }
+      ]
+    },
+    {
+      "scene": "Japan",
+      "labels": [
+        { "name": "Mule Musiq", "discogs_id": 22752 },
+        { "name": "Op.disc", "discogs_id": 22959 },
+        { "name": "Sublime Records", "discogs_id": 22757 },
+        { "name": "Transonic Records", "discogs_id": 24785 },
+        { "name": "Far East Recording", "discogs_id": 40116 },
+        { "name": "WC Recordings", "discogs_id": 31938 }
+      ]
+    },
+    {
+      "scene": "Georgia / Eastern Europe",
+      "labels": [
+        { "name": "Nervmusic Records", "discogs_id": 155760 },
+        { "name": "Horoom Records", "discogs_id": 852960 }
+      ]
+    },
+    {
+      "scene": "São Paulo / South America",
+      "labels": [
+        { "name": "Auxilio Records", "discogs_id": 1174953 },
+        { "name": "QTV", "discogs_id": 530432 },
+        { "name": "Rakta Records", "discogs_id": 1255785 }
+      ]
+    },
+    {
+      "scene": "Italy",
+      "labels": [
+        { "name": "Danza Meccanica", "discogs_id": 1264980 },
+        { "name": "Mannequin Records", "discogs_id": 238653 }
+      ]
+    },
+    {
+      "scene": "Manchester",
+      "labels": [
+        { "name": "Modern Love", "discogs_id": 28506 },
+        { "name": "Skam Records", "discogs_id": 2791 }
+      ]
+    }
+  ],
+  "_notes": "Label IDs are from Discogs. Some may need verification. Add more labels by finding their Discogs ID at discogs.com/label/[id]. Target: ~6000 total releases across all labels."
+}

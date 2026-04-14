@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>guestsixonetwo — Visual Archive</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0a0a0a;
+            --bg-elevated: #111111;
+            --border: #222222;
+            --text: #e0e0e0;
+            --text-dim: #777777;
+            --accent: #ffffff;
+            --mono: 'IBM Plex Mono', 'Consolas', monospace;
+            --sans: 'IBM Plex Sans', 'Helvetica Neue', sans-serif;
+            --tile: 350px;
+            --gap: 2px;
+        }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { font-size: 14px; -webkit-font-smoothing: antialiased; }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--sans);
+            min-height: 100vh;
+        }
+
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: var(--bg);
+            border-bottom: 1px solid var(--border);
+            padding: 16px 24px;
+            display: flex;
+            align-items: baseline;
+            gap: 16px;
+        }
+
+        header h1 {
+            font-family: var(--mono);
+            font-size: 1rem;
+            font-weight: 500;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            color: var(--accent);
+        }
+
+        header span {
+            font-family: var(--mono);
+            font-size: 0.85rem;
+            color: var(--text-dim);
+        }
+
+        #mosaic {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, var(--tile));
+            justify-content: center;
+            gap: var(--gap);
+            padding: var(--gap);
+        }
+
+        .tile {
+            width: var(--tile);
+            height: var(--tile);
+            overflow: hidden;
+            background: var(--bg-elevated);
+            cursor: pointer;
+            position: relative;
+        }
+
+        .tile img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .tile:hover img {
+            filter: brightness(1.1);
+        }
+
+        /* Lightbox */
+        #lightbox {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 200;
+            background: rgba(0, 0, 0, 0.92);
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        #lightbox.open {
+            display: flex;
+        }
+
+        #lightbox img {
+            max-width: 90vw;
+            max-height: 90vh;
+            object-fit: contain;
+        }
+
+        #lightbox .caption {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: var(--mono);
+            font-size: 0.8rem;
+            color: var(--text-dim);
+            max-width: 600px;
+            text-align: center;
+            line-height: 1.5;
+        }
+
+        .loading-msg {
+            font-family: var(--mono);
+            font-size: 0.85rem;
+            color: var(--text-dim);
+            text-align: center;
+            padding: 80px 24px;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>@guestsixonetwo</h1>
+    <span id="count"></span>
+</header>
+
+<div id="mosaic">
+    <div class="loading-msg">Loading...</div>
+</div>
+
+<div id="lightbox">
+    <img src="" alt="">
+    <div class="caption"></div>
+</div>
+
+<script>
+(async function () {
+    const mosaic = document.getElementById('mosaic');
+    const countEl = document.getElementById('count');
+    const lightbox = document.getElementById('lightbox');
+    const lbImg = lightbox.querySelector('img');
+    const lbCaption = lightbox.querySelector('.caption');
+
+    // Load manifest
+    let data;
+    try {
+        const res = await fetch('data/instagram.json');
+        data = await res.json();
+    } catch (e) {
+        mosaic.innerHTML = '<div class="loading-msg">Run scripts/fetch_instagram.py first to download images.</div>';
+        return;
+    }
+
+    countEl.textContent = `${data.total} posts`;
+    mosaic.innerHTML = '';
+
+    // Render tiles
+    data.posts.forEach((post) => {
+        const tile = document.createElement('div');
+        tile.className = 'tile';
+
+        const img = document.createElement('img');
+        img.loading = 'lazy';
+        img.alt = post.caption || '';
+        img.src = post.image;
+        tile.appendChild(img);
+
+        // Click to open lightbox
+        tile.addEventListener('click', () => {
+            lbImg.src = post.image;
+            lbCaption.textContent = post.caption || '';
+            lightbox.classList.add('open');
+        });
+
+        mosaic.appendChild(tile);
+    });
+
+    // Close lightbox
+    lightbox.addEventListener('click', () => {
+        lightbox.classList.remove('open');
+        lbImg.src = '';
+    });
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            lightbox.classList.remove('open');
+            lbImg.src = '';
+        }
+    });
+})();
+</script>
+
+</body>
+</html>

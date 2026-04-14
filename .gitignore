@@ -1,0 +1,32 @@
+# macOS
+.DS_Store
+**/.DS_Store
+
+# Editor / IDE
+.vscode/
+.idea/
+*.swp
+
+# Claude Code local settings (may contain tokens/paths)
+.claude/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+env/
+
+# Node (if ever added)
+node_modules/
+
+# Secrets
+.env
+.env.local
+*.env
+
+# Local data caches / progress checkpoints
+data/.progress.json
+data/.ig_progress.json
+data/enrich_checkpoint.json
+data/releases_pretty.json
