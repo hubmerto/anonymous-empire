@@ -27,11 +27,7 @@ window.ViewTimeline = {
                     <div class="timeline-overview-bars"></div>
                     <div class="timeline-viewport"></div>
                 </div>
-                <div class="timeline-decades">
-                    <button type="button" class="tl-decade tl-decade-all active" data-all="1">
-                        <span class="tl-decade-label">All</span>
-                    </button>
-                </div>
+                <div class="timeline-decades"></div>
             </div>
             <div class="timeline-strip"></div>
         `;
@@ -61,11 +57,6 @@ window.ViewTimeline = {
 
         this.overview.addEventListener('click', e => this._jumpFromOverview(e));
 
-        // "All" button → zoom out completely.
-        this.decadesRow.querySelector('.tl-decade-all').addEventListener('click', () => {
-            this._setZoom({ mode: 'all', value: null });
-        });
-
         // Populate columns lazily as they enter the viewport.
         this.columnObserver = new IntersectionObserver(entries => {
             entries.forEach(entry => {
@@ -83,7 +74,7 @@ window.ViewTimeline = {
         // Reset strip + decades (keep the "All" button).
         this.strip.innerHTML = '';
         this.overviewBars.innerHTML = '';
-        this.decadesRow.querySelectorAll('.tl-decade:not(.tl-decade-all)').forEach(n => n.remove());
+        while (this.decadesRow.firstChild) this.decadesRow.removeChild(this.decadesRow.firstChild);
         this.yearColumns = {};
 
         const dated = filtered.filter(r => r.year && r.year > 0);
@@ -223,8 +214,6 @@ window.ViewTimeline = {
             const d = seg.dataset.decade ? parseInt(seg.dataset.decade, 10) : null;
             seg.classList.toggle('active', d === activeDecade);
         });
-        this.decadesRow.querySelector('.tl-decade-all')
-            .classList.toggle('active', mode === 'all');
 
         // Mark year labels active.
         for (const y in this.yearColumns) {
@@ -293,9 +282,9 @@ window.ViewTimeline = {
         // Per-tier clamps: sizes must fit, but the tier sets the upper bound
         // so zoom levels are visually distinct.
         const [min, max] =
-            this._zoom.mode === 'all'    ? [4, 42] :
-            this._zoom.mode === 'decade' ? [16, 120] :
-                                           [40, 180];
+            this._zoom.mode === 'all'    ? [4, 120] :
+            this._zoom.mode === 'decade' ? [16, 160] :
+                                           [40, 200];
         let size = Math.min(sizeByH, sizeByW);
         size = Math.max(min, Math.min(max, size));
         this.strip.style.setProperty('--tl-thumb-size', `${size}px`);

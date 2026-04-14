@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anonymous Empire — Library</title>
+    <meta name="description" content="A visual catalogue of techno's graphic language — 734 record covers from Detroit to Berlin, Brazil to Japan, sorted by year, place, and colour.">
+    <meta name="theme-color" content="#0a0a0a">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%230a0a0a'/%3E%3Ccircle cx='8' cy='8' r='6' fill='none' stroke='%23e0e0e0' stroke-width='1'/%3E%3Ccircle cx='8' cy='8' r='1.2' fill='%23e0e0e0'/%3E%3C/svg%3E">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9/dist/leaflet.css">
+    <link rel="stylesheet" href="css/style.css?v=25">
+</head>
+<body>
+    <nav class="site-nav">
+        <a class="site-nav-brand" href="index.html" aria-label="Home">Æ</a>
+        <div class="site-nav-links">
+            <a href="library.html#grid" data-view="grid" class="active">Grid</a>
+            <a href="library.html#timeline" data-view="timeline">Timeline</a>
+            <a href="library.html#map" data-view="map">Map</a>
+            <a href="library.html#color" data-view="color">Colour</a>
+        </div>
+    </nav>
+
+    <header class="site-header">
+        <div class="header-top">
+            <div class="header-title">
+                <h1>Library</h1>
+                <p class="header-sub">A visual catalogue of techno's graphic language.</p>
+            </div>
+        </div>
+
+        <div class="controls">
+            <div class="search-wrap">
+                <input
+                    type="text"
+                    id="search"
+                    placeholder="Search artist, title, catalog…"
+                    autocomplete="off"
+                    spellcheck="false"
+                >
+            </div>
+
+            <div class="filters">
+                <div class="filter-group">
+                    <label>Scene</label>
+                    <select id="filter-scene">
+                        <option value="">All scenes</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label>Label</label>
+                    <select id="filter-label">
+                        <option value="">All labels</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label>Decade</label>
+                    <select id="filter-decade">
+                        <option value="">All decades</option>
+                        <option value="1980">1980s</option>
+                        <option value="1990">1990s</option>
+                        <option value="2000">2000s</option>
+                        <option value="2010">2010s</option>
+                        <option value="2020">2020s</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="active-filters" id="active-filters"></div>
+    </header>
+
+    <div class="result-count" id="result-count"></div>
+
+    <main>
+        <div class="loading" id="loading">Loading archive…</div>
+
+        <div class="view-container active" id="view-grid">
+            <div class="grid-mode-toggle">
+                <button class="view-btn active" data-mode="grid" title="Grid">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                        <rect x="1" y="1" width="6" height="6"/><rect x="9" y="1" width="6" height="6"/>
+                        <rect x="1" y="9" width="6" height="6"/><rect x="9" y="9" width="6" height="6"/>
+                    </svg>
+                </button>
+                <button class="view-btn" data-mode="list" title="List">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                        <rect x="1" y="1" width="14" height="3"/><rect x="1" y="6" width="14" height="3"/>
+                        <rect x="1" y="11" width="14" height="3"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="grid" id="grid"></div>
+            <div class="load-more" id="load-more">
+                <button class="load-more-btn">Load more</button>
+            </div>
+            <div class="empty-state" id="empty-state">
+                <p>No releases match your filters.</p>
+            </div>
+        </div>
+
+        <div class="view-container" id="view-timeline">
+            <div class="timeline-year-label" id="timeline-year-label"></div>
+            <div class="timeline-strip"></div>
+        </div>
+
+        <div class="view-container" id="view-map">
+            <div class="map-wrap">
+                <div id="map-container"></div>
+                <div class="map-sidebar">
+                    <div class="map-sidebar-header">
+                        <div>
+                            <div class="map-sidebar-title"></div>
+                            <div class="map-sidebar-count"></div>
+                            <div class="map-sidebar-labels"></div>
+                        </div>
+                        <button class="map-sidebar-close">&times;</button>
+                    </div>
+                    <div class="map-sidebar-body">
+                        <div class="map-sidebar-grid"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="view-container" id="view-color">
+            <div class="color-spectrum"></div>
+            <div class="color-grid grid"></div>
+            <div class="color-load-more load-more">
+                <button class="load-more-btn">Load more</button>
+            </div>
+            <div class="color-empty empty-state">
+                <p>No releases with color data.</p>
+            </div>
+        </div>
+    </main>
+
+    <div class="overlay" id="overlay">
+        <div class="overlay-backdrop" id="overlay-backdrop"></div>
+        <div class="overlay-content" id="overlay-content">
+            <button class="overlay-close" id="overlay-close">&times;</button>
+            <div class="overlay-body" id="overlay-body"></div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-stats" id="stats">
+            <span class="stat" id="stat-total">—</span>
+            <span class="stat" id="stat-labels">—</span>
+            <span class="stat" id="stat-range">—</span>
+        </div>
+        <p>Data sourced from <a href="https://www.discogs.com" target="_blank" rel="noopener">Discogs</a>. Images are property of their respective rights holders.</p>
+    </footer>
+
+    <script src="https://unpkg.com/leaflet@1.9/dist/leaflet.js"></script>
+    <script src="js/view-grid.js?v=8"></script>
+    <script src="js/view-timeline.js?v=10"></script>
+    <script src="js/view-map.js?v=9"></script>
+    <script src="js/view-color.js?v=7"></script>
+    <script src="js/app.js?v=11"></script>
+</body>
+</html>

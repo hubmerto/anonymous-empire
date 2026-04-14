@@ -87,8 +87,8 @@ function switchView(viewName) {
     APP.currentView = viewName;
     location.hash = viewName === 'grid' ? '' : viewName;
 
-    // Update tabs
-    document.querySelectorAll('.view-tab').forEach(tab => {
+    // Update tabs (legacy) + nav links
+    document.querySelectorAll('.view-tab, .site-nav-links a[data-view]').forEach(tab => {
         tab.classList.toggle('active', tab.dataset.view === viewName);
     });
 
@@ -347,9 +347,10 @@ function setupEventListeners() {
         document.getElementById(id).addEventListener('change', applyFilters);
     });
 
-    // View tabs
-    document.querySelectorAll('.view-tab').forEach(tab => {
-        tab.addEventListener('click', () => {
+    // View tabs + nav links
+    document.querySelectorAll('.view-tab, .site-nav-links a[data-view]').forEach(tab => {
+        tab.addEventListener('click', (e) => {
+            if (tab.tagName === 'A') e.preventDefault();
             switchView(tab.dataset.view);
         });
     });

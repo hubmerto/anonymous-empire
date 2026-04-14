@@ -29,9 +29,12 @@ window.ViewMap = {
         this.map = L.map(this.mapEl, {
             zoomControl: false,
             attributionControl: false,
-            minZoom: 2,
+            minZoom: 3,
             maxZoom: 12,
-        }).setView([35, 10], 3);
+            worldCopyJump: false,
+            maxBounds: [[-75, -180], [85, 180]],
+            maxBoundsViscosity: 1.0,
+        }).setView([40, 5], 4);
 
         L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
             subdomains: 'abcd',
@@ -94,15 +97,23 @@ window.ViewMap = {
             // Spread radius: scales with sqrt(count); keeps scatter inside the country.
             // Smaller / island scenes (Japan, UK, Scandinavia) get a tighter cap.
             const count = releases.length;
-            const smallScenes = new Set(['Japan', 'UK / London', 'Netherlands', 'Ghent', 'Frankfurt', 'Munich', 'Hamburg', 'Berlin', 'Scandinavia', 'Manchester', 'Italy', 'Spain', 'Eastern Europe']);
-            const maxSpread = smallScenes.has(scene) ? 2.5 : 5;
-            const spread = Math.min(0.5 + Math.sqrt(count) * 0.25, maxSpread);
+            const smallScenes = new Set(['Japan', 'UK / London', 'Netherlands', 'Ghent', 'Frankfurt', 'Munich', 'Hamburg', 'Scandinavia', 'Manchester', 'Italy', 'Spain', 'Eastern Europe']);
+            const maxSpread = smallScenes.has(scene) ? 3.2 : 6.5;
+            // Grow spread with count so dense scenes (Berlin, Detroit) don't overlap.
+            const spread = Math.min(0.8 + Math.sqrt(count) * 0.35, maxSpread);
 
-            // Place each release as an individual marker
+            // Phyllotaxis (sunflower) pattern: uniform coverage, no clustering.
+            // angle = i * golden_angle ensures adjacent points are maximally separated.
+            const GOLDEN_ANGLE = Math.PI * (3 - Math.sqrt(5));
+            // Small per-scene rotation so patterns don't all point the same way.
+            const phase = rand() * Math.PI * 2;
+
             releases.forEach((r, idx) => {
-                // Scatter in a circle around center
-                const angle = rand() * Math.PI * 2;
-                const dist = Math.sqrt(rand()) * spread; // sqrt for uniform area distribution
+                // radius uses sqrt for uniform-area distribution; small jitter prevents rigid look.
+                const t = (idx + 0.5) / count;
+                const jitter = (rand() - 0.5) * 0.08;  // tiny, keeps no-overlap property
+                const dist = (Math.sqrt(t) + jitter) * spread;
+                const angle = idx * GOLDEN_ANGLE + phase;
                 const lat = baseLat + Math.cos(angle) * dist * 0.7;
                 const lng = baseLng + Math.sin(angle) * dist;
 
@@ -150,7 +161,7 @@ window.ViewMap = {
         // Fit bounds
         if (allMarkers.length > 0) {
             const group = L.featureGroup(allMarkers);
-            this.map.fitBounds(group.getBounds().pad(0.15));
+            this.map.fitBounds(group.getBounds().pad(0.15), { maxZoom: 5, minZoom: 4 });
         }
 
         // Refresh sidebar if open
