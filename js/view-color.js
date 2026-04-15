@@ -72,30 +72,23 @@ window.ViewColor = {
 
     // ---- Sort & bucket --------------------------------------------------
 
-    // Achromatic if low saturation or near-black/white. Always derive from
-    // the live hsl (or hex) so results don't drift from stale sort_hue.
-    _hsl(r) {
-        if (r.hsl && typeof r.hsl.h === 'number') return r.hsl;
-        if (r.color) return this._hexToHsl(r.color);
-        return null;
-    },
-    _isAchromatic(hsl) {
-        if (!hsl) return true;
-        return hsl.s < 15 || hsl.l < 8 || hsl.l > 94;
-    },
-
+    // Sort hue is pre-computed by scripts/extract_colors.py using a
+    // chroma-weighted palette scan: -1..0 = achromatic (by lightness),
+    // 0..360 = chromatic hue. Trust it.
     _sortKey(r) {
-        const hsl = this._hsl(r);
-        if (this._isAchromatic(hsl)) {
-            return [1, hsl ? hsl.l : 0, 0];
+        const hue = (typeof r.sort_hue === 'number') ? r.sort_hue : null;
+        const l = (r.hsl && typeof r.hsl.l === 'number') ? r.hsl.l : 0;
+        if (hue === null || hue < 0) {
+            // Achromatic bucket: dark → light (use (1+hue) mapped from [-1..0]→[0..1] * 100).
+            const darkToLight = hue !== null ? (1 + hue) * 100 : l;
+            return [1, darkToLight, 0];
         }
-        return [0, hsl.h, hsl.l];
+        return [0, hue, l];
     },
 
     _bucketOf(r) {
-        const hsl = this._hsl(r);
-        if (this._isAchromatic(hsl)) return 12;
-        const hue = hsl.h;
+        const hue = (typeof r.sort_hue === 'number') ? r.sort_hue : null;
+        if (hue === null || hue < 0) return 12;
         // Red wraps 345→15
         if (hue >= 345 || hue < 15) return 0;
         if (hue < 45)  return 1;

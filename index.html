@@ -13,7 +13,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css?v=34">
+    <link rel="stylesheet" href="css/style.css?v=47">
 </head>
 <body class="is-home">
     <nav class="site-nav site-nav--over-hero">
@@ -53,8 +53,7 @@
     <!-- SCENES -->
     <section class="scenes" id="scenes">
         <div class="scenes-intro">
-            <p>Techno is the only major music genre that systematically removed the human face from its visual identity. What replaced it was not absence but system: grid structures, monochrome palettes, debossed typography, coded catalog numbers, and an ideological commitment to letting the design speak without the designer being seen.</p>
-            <p>Anonymous Empire catalogues this visual history. The archive spans approximately eight hundred releases across ninety labels and twenty geographic scenes, from Metroplex's first pressing in 1985 to the present. Each entry preserves the artwork, metadata, and label context of a release, organized by the institutional and geographic networks that determined how the music looked.</p>
+            <p>Techno's visual culture is the most deliberately constructed anti-image system in popular music history. From hand-drawn logos on a Detroit kitchen table to UNESCO-recognized heritage, the genre's artwork evolved through a unique tension: artists living amid industrial decay imagined gleaming futures, then systematically erased their own faces from the picture. This site traces that visual trajectory across four decades, nine cities, and hundreds of designers, labels, and artifacts. It documents how economic constraint became aesthetic ideology, and how a faceless genre built one of the most recognizable visual languages in modern design.</p>
         </div>
 
         <div class="scenes-carousel-wrap">
@@ -77,6 +76,20 @@
             <button class="scene-card" data-scene="brazil" aria-label="São Paulo / South America">
                 <img src="brazil.jpeg" alt="">
             </button>
+            <button class="scene-card" data-scene="chicago" aria-label="Chicago"><img src="placeholder.svg" alt=""></button>
+            <button class="scene-card" data-scene="cologne" aria-label="Cologne"><img src="placeholder.svg" alt=""></button>
+            <button class="scene-card" data-scene="frankfurt" aria-label="Frankfurt"><img src="placeholder.svg" alt=""></button>
+            <button class="scene-card" data-scene="hamburg" aria-label="Hamburg"><img src="placeholder.svg" alt=""></button>
+            <button class="scene-card" data-scene="munich" aria-label="Munich"><img src="placeholder.svg" alt=""></button>
+            <button class="scene-card" data-scene="chemnitz" aria-label="Chemnitz / Dresden"><img src="placeholder.svg" alt=""></button>
+            <button class="scene-card" data-scene="sheffield" aria-label="Sheffield / Leeds"><img src="placeholder.svg" alt=""></button>
+            <button class="scene-card" data-scene="netherlands" aria-label="Netherlands"><img src="placeholder.svg" alt=""></button>
+            <button class="scene-card" data-scene="paris" aria-label="Paris"><img src="placeholder.svg" alt=""></button>
+            <button class="scene-card" data-scene="newyork" aria-label="New York"><img src="placeholder.svg" alt=""></button>
+            <button class="scene-card" data-scene="canada" aria-label="Canada"><img src="placeholder.svg" alt=""></button>
+            <button class="scene-card" data-scene="georgia" aria-label="Georgia / Eastern Europe"><img src="placeholder.svg" alt=""></button>
+            <button class="scene-card" data-scene="italy" aria-label="Italy"><img src="placeholder.svg" alt=""></button>
+            <button class="scene-card" data-scene="manchester" aria-label="Manchester"><img src="placeholder.svg" alt=""></button>
         </div>
 
         </div>
@@ -93,64 +106,55 @@
         </article>
     </section>
 
-    <!-- VISUAL SYSTEM BREAKDOWN -->
-    <section class="system" id="system">
-        <div class="system-head">
-            <h2>How to read a techno sleeve</h2>
-            <p>Five recurring elements. The grammar of the genre, reduced.</p>
-        </div>
-        <div class="system-grid">
-            <figure class="system-item" data-sys="catalog">
-                <div class="system-img"></div>
-                <figcaption>
-                    <span class="system-num">01</span>
-                    <h3>Catalog number</h3>
-                    <p>A coded signature — label prefix, release number. Identifies the sleeve before the artist does.</p>
-                </figcaption>
-            </figure>
-            <figure class="system-item" data-sys="mark">
-                <div class="system-img"></div>
-                <figcaption>
-                    <span class="system-num">02</span>
-                    <h3>Label mark</h3>
-                    <p>Often debossed, sometimes barely visible. The institution signing the object.</p>
-                </figcaption>
-            </figure>
-            <figure class="system-item" data-sys="type">
-                <div class="system-img"></div>
-                <figcaption>
-                    <span class="system-num">03</span>
-                    <h3>Typography</h3>
-                    <p>Monospace, industrial, modular. Type is usually the only image on the cover.</p>
-                </figcaption>
-            </figure>
-            <figure class="system-item" data-sys="grid">
-                <div class="system-img"></div>
-                <figcaption>
-                    <span class="system-num">04</span>
-                    <h3>Grid</h3>
-                    <p>Alignment is the design. Every element snaps to a system — no bleed, no drama.</p>
-                </figcaption>
-            </figure>
-            <figure class="system-item" data-sys="palette">
-                <div class="system-img"></div>
-                <figcaption>
-                    <span class="system-num">05</span>
-                    <h3>Palette</h3>
-                    <p>Black, white, one accent. Colour is rationed, and when it arrives it means something.</p>
-                </figcaption>
-            </figure>
+    <!-- POVERTY · POLITICS · INDUSTRY kinetic typography -->
+    <section class="ppi-section" id="ppi-section" style="width:100vw;height:50vh;margin:0;padding:0;background:#000;">
+      <iframe src="poverty-politics-industry.html" title="Poverty Politics Industry" style="width:100%;height:100%;border:0;display:block;" loading="lazy"></iframe>
+    </section>
+
+    <!-- POVERTY · POLITICS · POST-INDUSTRY essays -->
+    <section class="ppi-essays">
+      <article class="ppi-col">
+        <h3>Poverty</h3>
+        <p>Techno was invented by people who couldn't afford to make it look expensive. Juan Atkins drew the Metroplex logo with a ruler because hiring a designer wasn't an option. The earliest records arrived in generic sleeves, hand-stamped labels, or no packaging at all. Just a white sticker on a white disc. This wasn't a stylistic decision. It was Tuesday.</p>
+        <p>But when the scene grew and money became available, the austerity stayed. Basic Channel could have afforded glossy artwork by the mid-1990s. They kept pressing near-blank sleeves with embossed text you could barely read. In every other genre, success brings visual escalation: bigger portraits, richer colors, shinier finishes. Techno did the opposite. It doubled down on less. When you build something powerful out of almost nothing, decoration starts to feel dishonest. The blankness isn't absence. It's confidence.</p>
+      </article>
+      <article class="ppi-col">
+        <h3>Politics</h3>
+        <p>In 1989, Underground Resistance declared war on the music industry. Members performed in ski masks. They refused press photos. They scratched anti-corporate messages into vinyl run-out grooves. Drexciya went further, replacing their faces entirely with an Afrofuturist underwater mythology. No portraits, no bios, no interviews. Just the sound and the world it built.</p>
+        <p>This wasn't performance art. It was a direct refusal of how the industry commodifies artists, especially Black artists. Techno said: the music is the work, not the personality. That political position naturally produces a visual culture that suppresses the human face, rejects celebrity, and foregrounds abstraction. Every faceless sleeve is a quiet act of resistance against an industry that wants to sell you a person instead of a sound.</p>
+      </article>
+      <article class="ppi-col">
+        <h3>Post-Industry</h3>
+        <p>Techno was born in cities where manufacturing had already left. Detroit's auto plants were closing. Berlin's power stations stood empty after reunification. The music moved into the wreckage: abandoned factories, derelict bank vaults, concrete shells with no heating and no permits. These weren't venue choices. They were the only spaces available.</p>
+        <p>The artwork mirrors the architecture because both come from the same condition. You don't put pastel gradients on a record conceived inside a brutalist bunker. Tresor opened in 1991 inside the rusted vault of a demolished department store. Heavy steel doors, metal bars, strobes cutting through fog. Monochrome palettes, raw typography, industrial textures. The spaces dictated what felt true, and the visual language wrote itself. Techno's identity isn't designed from the outside. It grows from the concrete up.</p>
+      </article>
+    </section>
+
+    <!-- TRAIL -->
+    <section class="trail-section" id="trail-section">
+        <div class="trail-frame" id="trail-frame"></div>
+    </section>
+
+    <!-- ABOUT -->
+    <section class="about-section">
+        <div class="about-left"><div id="cover-pile" class="cover-pile"></div></div>
+        <div class="about-right">
+            <h2 class="about-title">About the Archive</h2>
+            <p>Anonymous Empire is a visual archive of techno's forty-year refusal to show its face. It catalogues roughly eight hundred releases across ninety labels and twenty geographic scenes, from Metroplex's first pressing in 1985 through the present day. Each entry preserves the artwork, metadata, and institutional context of a record, organized by the networks of cities, labels, and designers that shaped how the music looked.</p>
+            <p>This catalogue treats record sleeves, logos, catalog numbers, and label marks as primary documents. It does not rank or review. It preserves. The goal is to make visible a design tradition that has deliberately avoided visibility, and to show how a faceless genre produced one of the most coherent and recognizable visual languages in modern graphic culture. Use this as a reference tool if you are a designer, researcher, DJ, or anyone trying to understand how a music built on erasure ended up being impossible to mistake for anything else.</p>
+            <p class="about-cta"><a href="library.html">See the catalogue →</a></p>
         </div>
     </section>
 
     <footer>
         <p>Data sourced from <a href="https://www.discogs.com" target="_blank" rel="noopener">Discogs</a>. Images are property of their respective rights holders.</p>
-        <p><a href="library.html">Browse the full library →</a></p>
-    </footer>
+        <p><a href="library.html">Browse the full library →</a></p>    </footer>
 
     <script src="js/protect.js?v=1"></script>
     <script src="js/hero.js?v=14"></script>
-    <script src="js/scenes.js?v=8"></script>
-    <script src="js/system.js?v=1"></script>
+    <script src="js/scenes.js?v=9"></script>
+    <script src="js/trail.js?v=2"></script>
+    <script src="js/covers-list.js?v=1"></script>
+    <script src="js/pile.js?v=5"></script>
 </body>
 </html>
