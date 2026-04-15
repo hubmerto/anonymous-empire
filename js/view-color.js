@@ -9,7 +9,8 @@
 window.ViewColor = {
     isInitialized: false,
 
-    // 12 hue bins + 1 achromatic — used only for the spectrum bar on top.
+    // Rainbow order (red → purple), then black, then white.
+    // Order in this array == order on the spectrum bar and in the mosaic.
     BUCKETS: [
         { idx: 0,  label: 'red',     hue: 0   },
         { idx: 1,  label: 'orange',  hue: 30  },
@@ -20,11 +21,13 @@ window.ViewColor = {
         { idx: 6,  label: 'cyan',    hue: 195 },
         { idx: 7,  label: 'blue',    hue: 225 },
         { idx: 8,  label: 'indigo',  hue: 255 },
-        { idx: 9,  label: 'purple',  hue: 285 },
-        { idx: 10, label: 'magenta', hue: 315 },
-        { idx: 11, label: 'pink',    hue: 340 },
-        { idx: 12, label: 'mono',    hue: null },
+        { idx: 9,  label: 'magenta', hue: 315 },
+        { idx: 10, label: 'pink',    hue: 340 },
+        { idx: 11, label: 'purple',  hue: 285 },
+        { idx: 12, label: 'dark',    hue: null, tone: 'dark'  },
+        { idx: 13, label: 'light',   hue: null, tone: 'light' },
     ],
+    LIGHT_L_THRESHOLD: 55,
 
     init(container) {
         this.container = container;
@@ -55,8 +58,8 @@ window.ViewColor = {
         });
 
         // Count per bucket for spectrum widths.
-        const bucketCounts = new Array(13).fill(0);
-        const bucketFirstIdx = new Array(13).fill(-1);
+        const bucketCounts = new Array(14).fill(0);
+        const bucketFirstIdx = new Array(14).fill(-1);
         sorted.forEach((r, i) => {
             const bi = this._bucketOf(r);
             bucketCounts[bi]++;
@@ -75,33 +78,41 @@ window.ViewColor = {
     // Sort hue is pre-computed by scripts/extract_colors.py using a
     // chroma-weighted palette scan: -1..0 = achromatic (by lightness),
     // 0..360 = chromatic hue. Trust it.
+    // Order: rainbow (red → purple), then black (dark tier), then white (light tier).
+    // _bucketOf returns the rainbow-ordered index; we sort primarily by that,
+    // then by hue within the bucket (for smooth transitions), then by lightness.
     _sortKey(r) {
         const hue = (typeof r.sort_hue === 'number') ? r.sort_hue : null;
         const l = (r.hsl && typeof r.hsl.l === 'number') ? r.hsl.l : 0;
-        if (hue === null || hue < 0) {
-            // Achromatic bucket: dark → light (use (1+hue) mapped from [-1..0]→[0..1] * 100).
-            const darkToLight = hue !== null ? (1 + hue) * 100 : l;
-            return [1, darkToLight, 0];
+        const bi = this._bucketOf(r);
+        const isAchromatic = (hue === null || hue < 0);
+        if (isAchromatic) {
+            // Dark tier: black (low L) first, lighter darks next.
+            // Light tier: less-light first, pure white last.
+            return [bi, l, 0];
         }
-        return [0, hue, l];
+        return [bi, hue, l];
     },
 
     _bucketOf(r) {
         const hue = (typeof r.sort_hue === 'number') ? r.sort_hue : null;
-        if (hue === null || hue < 0) return 12;
-        // Red wraps 345→15
-        if (hue >= 345 || hue < 15) return 0;
-        if (hue < 45)  return 1;
-        if (hue < 75)  return 2;
-        if (hue < 105) return 3;
-        if (hue < 150) return 4;
-        if (hue < 180) return 5;
-        if (hue < 210) return 6;
-        if (hue < 240) return 7;
-        if (hue < 270) return 8;
-        if (hue < 300) return 9;
-        if (hue < 330) return 10;
-        return 11;
+        const l = (r.hsl && typeof r.hsl.l === 'number') ? r.hsl.l : 0;
+        if (hue === null || hue < 0) {
+            return l >= this.LIGHT_L_THRESHOLD ? 13 : 12;
+        }
+        // Rainbow-ordered bucket indices matching BUCKETS array
+        if (hue >= 345 || hue < 15) return 0;  // red
+        if (hue < 45)  return 1;  // orange
+        if (hue < 75)  return 2;  // amber
+        if (hue < 105) return 3;  // yellow
+        if (hue < 150) return 4;  // green
+        if (hue < 180) return 5;  // teal
+        if (hue < 210) return 6;  // cyan
+        if (hue < 240) return 7;  // blue
+        if (hue < 270) return 8;  // indigo
+        if (hue < 300) return 11; // purple (last chromatic)
+        if (hue < 330) return 9;  // magenta
+        return 10;                // pink
     },
 
     // ---- Spectrum -------------------------------------------------------
@@ -117,7 +128,7 @@ window.ViewColor = {
             seg.style.flex = `${n}`;
             seg.style.background = b.hue !== null
                 ? `hsl(${b.hue}, 55%, 45%)`
-                : '#333';
+                : (b.tone === 'light' ? '#e8e8e8' : '#111');
             seg.title = `${b.label} · ${n}`;
             seg.addEventListener('click', () => this._jumpTo(firstIndices[b.idx]));
             this.spectrum.appendChild(seg);

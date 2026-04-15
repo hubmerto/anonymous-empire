@@ -13,7 +13,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css?v=47">
+    <link rel="stylesheet" href="css/style.css?v=51">
 </head>
 <body class="is-home">
     <nav class="site-nav site-nav--over-hero">
@@ -156,5 +156,17 @@
     <script src="js/trail.js?v=2"></script>
     <script src="js/covers-list.js?v=1"></script>
     <script src="js/pile.js?v=5"></script>
+    <script>
+      (function(){
+        var nav = document.querySelector('.site-nav');
+        if (!nav) return;
+        function update(){
+          if (window.scrollY > 40) nav.classList.add('site-nav--scrolled');
+          else nav.classList.remove('site-nav--scrolled');
+        }
+        update();
+        window.addEventListener('scroll', update, { passive: true });
+      })();
+    </script>
 </body>
 </html>
