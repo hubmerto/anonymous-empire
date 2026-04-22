@@ -2068,3 +2068,6 @@ body:not(.is-home) .site-header {
     margin: 0 !important;
 }
 body:not(.is-home) main { position: relative; z-index: 1; }
+
+/* Keep the white outline on the trail/mouse-path frame so it reads as interactive */
+.trail-frame { border: 1px solid #fff !important; }
