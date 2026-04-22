@@ -35,10 +35,13 @@ async function init() {
     setupLazyLoading();
     setupEventListeners();
 
-    // Read initial view from hash
+    // Read initial view from hash, then strip the hash so URL stays clean.
     const hash = location.hash.replace('#', '');
     if (APP.views[hash]) {
         APP.currentView = hash;
+    }
+    if (hash) {
+        history.replaceState(null, '', location.pathname);
     }
 
     // Init and activate starting view
