@@ -1872,7 +1872,11 @@ body.editing .release-card:hover { outline: 1px solid rgba(255,80,80,0.6); }
     --block-gap-sm: 2rem;     /* 32px */
 }
 
-.scenes,
+.scenes {
+    /* Intro hugs the hero — small top gap so it reads as the hero's subtitle. */
+    padding-top: 1.5rem !important;
+    padding-bottom: var(--section-py) !important;
+}
 .ppi-essays,
 .about-section {
     padding-top: var(--section-py) !important;
