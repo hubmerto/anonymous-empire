@@ -2120,3 +2120,20 @@ body:not(.is-home) .site-header { z-index: 1000 !important; }
         display: inline-block;
     }
 }
+
+/* Mobile: search header stays pinned, fully opaque, never lets the grid show through */
+@media (max-width: 720px) {
+    body:not(.is-home) .site-header {
+        position: sticky;
+        top: 60px;
+        z-index: 1000 !important;
+        background: #0a0a0a !important;
+        padding: 0.85rem 1rem !important;
+        box-shadow: 0 1px 0 #1a1a1a;
+    }
+    body:not(.is-home) .site-header .controls { flex-wrap: wrap; gap: 0.6rem; padding-bottom: 0; }
+    body:not(.is-home) .site-header .search-wrap { flex: 1 1 100%; max-width: none; }
+    body:not(.is-home) .site-header .filters { flex: 1 1 100%; gap: 0.5rem; }
+    body:not(.is-home) .site-header .filter-group select { min-width: 0; width: 100%; font-size: 0.8rem; }
+    body:not(.is-home) { padding-top: 60px; }
+}
