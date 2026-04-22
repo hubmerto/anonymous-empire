@@ -139,6 +139,9 @@ const SCENE_ORDER = [
             var s = SCENES[key];
             if (!s) return;
             textEl.classList.add('fading');
+            textEl.classList.remove('expanded'); // collapse whenever scene changes
+            var moreBtn = document.getElementById('scene-more');
+            if (moreBtn) moreBtn.textContent = 'Read more';
             setTimeout(function(){
                 titleEl.textContent = s.title;
                 bodyEl.textContent = s.body;
@@ -147,6 +150,14 @@ const SCENE_ORDER = [
             // Highlight active name in both marquee halves.
             document.querySelectorAll('.scene-name-btn').forEach(function(b){
                 b.classList.toggle('active', b.dataset.key === key);
+            });
+        }
+
+        var moreBtn = document.getElementById('scene-more');
+        if (moreBtn) {
+            moreBtn.addEventListener('click', function(){
+                var expanded = textEl.classList.toggle('expanded');
+                moreBtn.textContent = expanded ? 'Read less' : 'Read more';
             });
         }
 

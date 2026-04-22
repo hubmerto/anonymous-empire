@@ -2147,3 +2147,35 @@ body:not(.is-home) .site-header { z-index: 1000 !important; }
     .about-right > p { order: 3; }
     .about-right > .about-cta { order: 4; }
 }
+
+/* Read more / read less — visible only on mobile */
+.scene-more {
+    display: none;
+    margin-top: 1rem;
+    background: transparent;
+    border: 0;
+    padding: 0.25rem 0;
+    color: #fff;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    font-size: 0.95rem;
+    cursor: pointer;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+}
+@media (max-width: 720px) {
+    .scene-text .scene-body {
+        display: -webkit-box;
+        -webkit-line-clamp: 6;
+        line-clamp: 6;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+    .scene-text.expanded .scene-body {
+        display: block;
+        -webkit-line-clamp: unset;
+        overflow: visible;
+    }
+    .scene-more { display: inline-block; }
+}
