@@ -1671,13 +1671,15 @@ body.is-home footer a { color: var(--text); }
     text-transform: uppercase;
     letter-spacing: 0.08em;
     font-weight: 700;
-    color: #fff;
+    color: #000;
+    background: #fff;
     text-decoration: none;
-    border: 1px solid #fff;
+    border: 0;
+    outline: 0;
     padding: 0.85rem 1.5rem;
     transition: background 0.2s ease, color 0.2s ease;
 }
-.about-cta a:hover { background: #fff; color: #000; }
+.about-cta a:hover { background: #000; color: #fff; }
 
 .about-title {
     font-family: 'Megatron Sans', 'Megatron', 'Arial Black', Impact, sans-serif;
