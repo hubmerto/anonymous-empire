@@ -2052,3 +2052,8 @@ footer {
 
 /* No underline on the active scene name in the carousel — keep it as pure opacity */
 .scene-name-btn.active { text-decoration: none; }
+
+/* Scene nav arrow glyph — same chevron used in the library filter dropdowns */
+.scene-text .scene-nav svg { width: 14px; height: 10px; display: block; }
+.scene-text .scene-nav-prev svg { transform: rotate(90deg); }
+.scene-text .scene-nav-next svg { transform: rotate(-90deg); }
