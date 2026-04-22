@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <rect width="1200" height="630" fill="#0a0a0a"/>
+  <g transform="translate(600 315)" fill="#fff" text-anchor="middle" font-family="'Arial Black', 'Helvetica Neue', sans-serif" font-weight="900">
+    <text y="-10" font-size="120" letter-spacing="8">ANONYMOUS</text>
+    <text y="110" font-size="120" letter-spacing="8">EMPIRE</text>
+  </g>
+  <g transform="translate(600 525)" fill="#888" text-anchor="middle" font-family="ui-monospace, Menlo, monospace" font-size="22" letter-spacing="6">
+    <text>A VISUAL CATALOGUE OF TECHNO'S GRAPHIC LANGUAGE</text>
+  </g>
+</svg>
