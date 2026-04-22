@@ -2232,3 +2232,17 @@ body:not(.legal-page) a:focus { text-decoration: none !important; }
     }
     .overlay-image { aspect-ratio: 1; }
 }
+
+/* Mobile: force Arial Black on every text element except wordmark/logo SVGs */
+@media (max-width: 720px) {
+    body, body *:not(svg):not(svg *) {
+        font-family: 'Arial Black', 'Helvetica Neue', Arial, sans-serif !important;
+    }
+    /* Keep Megatron on the hero wordmark, nav brand and city-name carousel */
+    .site-nav-brand,
+    .site-nav-brand--full,
+    .scene-name-btn,
+    .scene-name-sep {
+        font-family: 'Megatron Sans', 'Arial Black', Impact, sans-serif !important;
+    }
+}
