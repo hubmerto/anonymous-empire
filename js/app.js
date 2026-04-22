@@ -85,7 +85,7 @@ function switchView(viewName) {
     if (!view) return;
 
     APP.currentView = viewName;
-    location.hash = viewName === 'grid' ? '' : viewName;
+    // Keep URL clean — views stay under /library/ without hash suffixes.
 
     // Update tabs (legacy) + nav links
     document.querySelectorAll('.view-tab, .site-nav-links a[data-view]').forEach(tab => {
