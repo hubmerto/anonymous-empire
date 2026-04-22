@@ -2022,3 +2022,33 @@ body.legal-page .legal-main { padding-top: 3rem; }
     text-transform: uppercase;
     line-height: 1;
 }
+
+/* ===== Block-mode: strip visible outlines & separators site-wide ===== */
+.site-nav,
+.site-nav--scrolled,
+.site-header,
+.result-count,
+.view-tabs,
+.view-tab + .view-tab,
+.grid-mode-toggle,
+.view-btn + .view-btn,
+.trail-frame,
+.scenes-names-marquee,
+.filter-tag,
+.search-wrap input,
+.filter-group select,
+.edit-btn,
+.edit-controls,
+footer {
+    border: 0 !important;
+}
+/* Keep usable focus state on inputs/selects without a border line */
+.search-wrap input:focus,
+.filter-group select:focus { outline: 1px solid #fff; outline-offset: -1px; }
+
+/* Replace the thin separators that divided segmented controls with zero-gap blocks */
+.view-tab,
+.view-btn { background: var(--bg-elevated); }
+
+/* No underline on the active scene name in the carousel — keep it as pure opacity */
+.scene-name-btn.active { text-decoration: none; }
