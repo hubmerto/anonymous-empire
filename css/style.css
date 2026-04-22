@@ -1998,3 +1998,7 @@ body.legal-page { background: #000; color: #e8e8e8; }
     margin-top: 2rem;
     font-weight: 700;
 }
+
+.legal-changelog { list-style: disc; margin-left: 1.5rem; }
+.legal-changelog li { font-size: 0.85rem; color: #aaa; margin-bottom: 0.35rem; }
+.legal-changelog li strong { color: #fff; font-weight: 700; margin-right: 0.4rem; }
