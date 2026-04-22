@@ -2137,3 +2137,13 @@ body:not(.is-home) .site-header { z-index: 1000 !important; }
     body:not(.is-home) .site-header .filter-group select { min-width: 0; width: 100%; font-size: 0.8rem; }
     body:not(.is-home) { padding-top: 60px; }
 }
+
+/* Mobile: interleave cover pile between About title and paragraph */
+@media (max-width: 900px) {
+    .about-section { display: flex !important; flex-direction: column; gap: 1.5rem; }
+    .about-left, .about-right { display: contents; }
+    .about-title { order: 1; }
+    .about-left > #cover-pile { order: 2; aspect-ratio: 1 / 1; height: auto; min-height: 0; }
+    .about-right > p { order: 3; }
+    .about-right > .about-cta { order: 4; }
+}
