@@ -2207,3 +2207,28 @@ body:not(.is-home) .site-header {
         font-family: 'Arial Black', 'Helvetica Neue', Arial, sans-serif !important;
     }
 }
+
+/* Remove link underlines across the site (legal pages keep theirs) */
+a { text-decoration: none; }
+body:not(.legal-page) a,
+body:not(.legal-page) a:hover,
+body:not(.legal-page) a:focus { text-decoration: none !important; }
+
+/* Album detail overlay: fit properly on mobile */
+@media (max-width: 720px) {
+    .overlay-content {
+        max-width: 100%;
+        width: calc(100% - 1.5rem) !important;
+        max-height: calc(100dvh - 1.5rem) !important;
+        margin: 0.75rem auto !important;
+    }
+    .overlay-details { padding: 1rem 1.15rem !important; }
+    .overlay-details h2 { font-size: 1.25rem !important; }
+    .overlay-details .overlay-artist { font-size: 1rem !important; }
+    .overlay-close {
+        width: 2.5rem;
+        height: 2.5rem;
+        font-size: 1.75rem;
+    }
+    .overlay-image { aspect-ratio: 1; }
+}
