@@ -1159,7 +1159,12 @@ footer a { text-decoration: underline; }
 }
 
 @media (max-width: 768px) {
-    .hero { aspect-ratio: 3 / 4; max-height: 80vh; }
+    .hero {
+        aspect-ratio: auto;
+        height: 100vh;
+        height: 100dvh; /* use dynamic viewport so mobile browser chrome doesn't clip */
+        max-height: none;
+    }
 }
 
 .footer-stats {
