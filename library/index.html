@@ -11,7 +11,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9/dist/leaflet.css">
-    <link rel="stylesheet" href="../css/style.css?v=71">
+    <link rel="stylesheet" href="../css/style.css?v=72">
 </head>
 <body>
     <nav class="site-nav">
@@ -71,20 +71,6 @@
         <div class="loading" id="loading">Loading archive…</div>
 
         <div class="view-container active" id="view-grid">
-            <div class="grid-mode-toggle">
-                <button class="view-btn active" data-mode="grid" title="Grid">
-                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
-                        <rect x="1" y="1" width="6" height="6"/><rect x="9" y="1" width="6" height="6"/>
-                        <rect x="1" y="9" width="6" height="6"/><rect x="9" y="9" width="6" height="6"/>
-                    </svg>
-                </button>
-                <button class="view-btn" data-mode="list" title="List">
-                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
-                        <rect x="1" y="1" width="14" height="3"/><rect x="1" y="6" width="14" height="3"/>
-                        <rect x="1" y="11" width="14" height="3"/>
-                    </svg>
-                </button>
-            </div>
             <div class="grid" id="grid"></div>
             <div class="load-more" id="load-more">
                 <button class="load-more-btn">Load more</button>
