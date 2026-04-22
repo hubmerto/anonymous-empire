@@ -2008,3 +2008,8 @@ body.legal-page { background: #0a0a0a; color: #e8e8e8; }
 .legal-changelog { list-style: disc; margin-left: 1.5rem; }
 .legal-changelog li { font-size: 0.85rem; color: #aaa; margin-bottom: 0.35rem; }
 .legal-changelog li strong { color: #fff; font-weight: 700; margin-right: 0.4rem; }
+
+/* Offset content so the fixed site nav doesn't overlap anything on non-home pages. */
+body:not(.is-home) { padding-top: 72px; }
+body:not(.is-home) .site-header { padding-top: 1rem; top: 72px; }
+body.legal-page .legal-main { padding-top: 3rem; }
