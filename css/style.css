@@ -2071,3 +2071,12 @@ body:not(.is-home) main { position: relative; z-index: 1; }
 
 /* Keep the white outline on the trail/mouse-path frame so it reads as interactive */
 .trail-frame { border: 1px solid #fff !important; }
+
+/* Force the sticky search header above map tiles & all view content */
+body:not(.is-home) .site-header { z-index: 1000 !important; }
+/* Leaflet's internal panes can go up to ~650; keep them below the sticky header */
+.leaflet-pane,
+.leaflet-control,
+.leaflet-top,
+.leaflet-bottom { z-index: auto !important; }
+#map-container .leaflet-container { z-index: 1; }
