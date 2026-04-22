@@ -961,7 +961,7 @@ select, input { font-family: var(--mono); }
 .overlay-image {
     width: 100%;
     aspect-ratio: 1;
-    background: #000;
+    background: #0a0a0a;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1120,7 +1120,7 @@ footer a { text-decoration: underline; }
     animation: heroTitleJitter 2.4s ease-in-out infinite;
 }
 .hero-wordmark svg path { fill: #fff !important; animation: heroTitleHue 0.36s steps(1, end) infinite; }
-.hero-wordmark svg rect { fill: #000 !important; }
+.hero-wordmark svg rect { fill: #0a0a0a !important; }
 @keyframes heroTitleJitter {
     0%, 100% { filter: none; }
     48%      { filter: blur(0.4px); }
@@ -1276,7 +1276,7 @@ footer a { text-decoration: underline; }
    title (right column) → full-width photo row with one expanded → body (right column)
    ============================================ */
 .scenes {
-    background: #000;
+    background: #0a0a0a;
     color: #fff;
     padding: 5rem 0 6rem;
     max-width: 100%;
@@ -1418,7 +1418,7 @@ footer a { text-decoration: underline; }
 
 /* ===== Home: visual system breakdown ===== */
 .system {
-    background: #000;
+    background: #0a0a0a;
     color: #fff;
     padding: 5rem 0 6rem;
     border-top: 1px solid #111;
@@ -1503,7 +1503,7 @@ footer a { text-decoration: underline; }
 
 /* ===== Home: trail ===== */
 .trail-section {
-    background: #000;
+    background: #0a0a0a;
     padding: 0;
 }
 .trail-section {
@@ -1514,7 +1514,7 @@ footer a { text-decoration: underline; }
     width: 100%;
     height: 85vh;
     min-height: 480px;
-    background: #000;
+    background: #0a0a0a;
     position: relative;
     overflow: hidden;
     cursor: crosshair;
@@ -1555,7 +1555,7 @@ body.is-home footer a { color: var(--text); }
    TRIAD — SCARCITY / REFUSAL / RUIN
    ============================================ */
 .triad {
-    background: #000;
+    background: #0a0a0a;
     color: #fff;
     height: 100vh;
     width: 100%;
@@ -1588,7 +1588,7 @@ body.is-home footer a { color: var(--text); }
     grid-template-columns: repeat(3, 1fr);
     gap: 2.5rem;
     padding: 5rem 1.5rem;
-    background: #000;
+    background: #0a0a0a;
     color: #fff;
     box-sizing: border-box;
 }
@@ -1621,7 +1621,7 @@ body.is-home footer a { color: var(--text); }
     align-items: stretch;
     gap: 3rem;
     padding: 6rem 1.5rem;
-    background: #000;
+    background: #0a0a0a;
     color: #fff;
     box-sizing: border-box;
 }
@@ -1748,14 +1748,14 @@ body.editing .release-card:hover { outline: 1px solid rgba(255,80,80,0.6); }
 .scenes-marquee-stack {
     width: 100%;
     margin-bottom: 3rem;
-    background: #000;
+    background: #0a0a0a;
 }
 .scenes-photo-marquee {
     position: relative;
     width: 100%;
     height: clamp(320px, 48vw, 540px);
     overflow: hidden;
-    background: #000;
+    background: #0a0a0a;
 }
 
 /* Photos — top-aligned row with per-orientation heights
@@ -1945,7 +1945,7 @@ footer { padding: var(--section-py) 1.5rem !important; }
 .scene-text .scene-nav:hover { background: #000; color: #fff; outline: 1px solid #fff; }
 
 /* ===== Legal pages (Impressum / Datenschutz) ===== */
-body.legal-page { background: #000; color: #e8e8e8; }
+body.legal-page { background: #0a0a0a; color: #e8e8e8; }
 .legal-main {
     max-width: 780px;
     margin: 0 auto;
