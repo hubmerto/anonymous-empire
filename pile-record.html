@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Anonymous Empire — Pile Recorder</title>
+<style>
+  html, body { margin: 0; padding: 0; background: #000; color: #fff; font-family: ui-monospace, Menlo, monospace; }
+  body { display: flex; flex-direction: column; align-items: center; gap: 1rem; padding: 1rem; }
+  canvas { background: #000; width: min(80vmin, 720px); height: min(80vmin, 720px); }
+  .controls { display: flex; gap: 0.75rem; align-items: center; }
+  button { background: #fff; color: #000; border: 0; padding: 0.6rem 1rem; cursor: pointer; font: inherit; }
+  button:disabled { opacity: 0.4; cursor: default; }
+  #status { font-size: 0.85rem; color: #aaa; }
+</style>
+</head>
+<body>
+  <canvas id="stage" width="1080" height="1080"></canvas>
+  <div class="controls">
+    <button id="record">Record 20s & download</button>
+    <span id="status">Loading covers…</span>
+  </div>
+  <script>
+  (async function(){
+    const canvas = document.getElementById('stage');
+    const ctx = canvas.getContext('2d');
+    const status = document.getElementById('status');
+    const btn = document.getElementById('record');
+    const W = canvas.width, H = canvas.height;
+
+    ctx.fillStyle = '#000'; ctx.fillRect(0, 0, W, H);
+
+    // Load cover list
+    let covers = [];
+    try {
+      const r = await fetch('data/releases.json?v=' + Date.now());
+      const d = await r.json();
+      covers = d.releases.map(x => x.image).filter(Boolean);
+    } catch(e){}
+    if (!covers.length){ status.textContent = 'No covers found.'; return; }
+
+    // Shuffle
+    for (let i = covers.length - 1; i > 0; i--){
+      const j = Math.floor(Math.random() * (i + 1));
+      [covers[i], covers[j]] = [covers[j], covers[i]];
+    }
+
+    // Preload all images
+    status.textContent = 'Preloading ' + covers.length + ' covers…';
+    const images = await Promise.all(covers.map(src => new Promise(resolve => {
+      const im = new Image();
+      im.crossOrigin = 'anonymous';
+      im.onload = () => resolve(im);
+      im.onerror = () => resolve(null);
+      im.src = src;
+    })));
+    const loaded = images.filter(Boolean);
+    status.textContent = loaded.length + ' covers ready.';
+
+    const LOOP_MS = 20000;
+    const INTERVAL = LOOP_MS / loaded.length; // time per frame
+
+    function drawCover(img){
+      // Cover-fit onto W×H canvas (crop to square)
+      const iw = img.naturalWidth, ih = img.naturalHeight;
+      const scale = Math.max(W / iw, H / ih);
+      const dw = iw * scale, dh = ih * scale;
+      const dx = (W - dw) / 2, dy = (H - dh) / 2;
+      ctx.drawImage(img, dx, dy, dw, dh);
+    }
+
+    // Live preview loop (runs whenever not recording)
+    let previewId = null;
+    function runPreview(){
+      let i = 0;
+      ctx.fillStyle = '#000'; ctx.fillRect(0, 0, W, H);
+      previewId = setInterval(() => {
+        if (i >= loaded.length){
+          clearInterval(previewId);
+          runPreview();
+          return;
+        }
+        drawCover(loaded[i]);
+        i++;
+      }, INTERVAL);
+    }
+    runPreview();
+
+    // Recording
+    btn.addEventListener('click', async () => {
+      if (previewId) clearInterval(previewId);
+      ctx.fillStyle = '#000'; ctx.fillRect(0, 0, W, H);
+      btn.disabled = true;
+
+      const stream = canvas.captureStream(30);
+      const mime = ['video/webm;codecs=vp9', 'video/webm;codecs=vp8', 'video/webm']
+        .find(m => MediaRecorder.isTypeSupported(m)) || 'video/webm';
+      const rec = new MediaRecorder(stream, { mimeType: mime, videoBitsPerSecond: 12_000_000 });
+      const chunks = [];
+      rec.ondataavailable = e => { if (e.data.size) chunks.push(e.data); };
+      rec.onstop = () => {
+        const blob = new Blob(chunks, { type: mime });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'anonymous-empire-pile-' + Date.now() + '.webm';
+        document.body.appendChild(a);
+        a.click();
+        setTimeout(() => { URL.revokeObjectURL(url); a.remove(); }, 100);
+        status.textContent = 'Saved. Convert to MP4 with ffmpeg if needed.';
+        btn.disabled = false;
+        runPreview();
+      };
+
+      rec.start();
+
+      // Drive the animation on a tight timer so 20s produces exactly loaded.length frames.
+      const start = performance.now();
+      let i = 0;
+      function tick(now){
+        const elapsed = now - start;
+        const targetIdx = Math.min(loaded.length - 1, Math.floor(elapsed / INTERVAL));
+        while (i <= targetIdx){
+          drawCover(loaded[i]);
+          i++;
+        }
+        if (elapsed >= LOOP_MS){
+          rec.stop();
+          return;
+        }
+        const remain = LOOP_MS - elapsed;
+        status.textContent = 'Recording… ' + (remain / 1000).toFixed(1) + 's remaining';
+        requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    });
+  })();
+  </script>
+</body>
+</html>

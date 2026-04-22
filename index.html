@@ -13,7 +13,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css?v=51">
+    <link rel="stylesheet" href="css/style.css?v=61">
 </head>
 <body class="is-home">
     <nav class="site-nav site-nav--over-hero">
@@ -28,7 +28,6 @@
 
     <!-- HERO -->
     <section class="hero" id="hero">
-        <div class="hero-drops" id="hero-drops"></div>
         <div class="hero-wordmark">
             <svg viewBox="0 0 1440 768" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" aria-label="Anonymous Empire">
                 <path d="M1373.57 448.655H1300.26V505.46H1380.61C1381.58 512.257 1381.58 519.297 1380.85 526.823H1211.89V361.263H1378.18L1378.67 382.625H1300.26V427.778H1373.33L1373.57 448.655Z"/>
@@ -56,51 +55,18 @@
             <p>Techno's visual culture is the most deliberately constructed anti-image system in popular music history. From hand-drawn logos on a Detroit kitchen table to UNESCO-recognized heritage, the genre's artwork evolved through a unique tension: artists living amid industrial decay imagined gleaming futures, then systematically erased their own faces from the picture. This site traces that visual trajectory across four decades, nine cities, and hundreds of designers, labels, and artifacts. It documents how economic constraint became aesthetic ideology, and how a faceless genre built one of the most recognizable visual languages in modern design.</p>
         </div>
 
-        <div class="scenes-carousel-wrap">
-        <div class="scenes-carousel" id="scenes-carousel">
-            <button class="scene-card active" data-scene="detroit" aria-label="Detroit">
-                <img src="detroit.jpg" alt="">
-            </button>
-            <button class="scene-card" data-scene="berlin" aria-label="Berlin">
-                <img src="berlin.jpg" alt="">
-            </button>
-            <button class="scene-card" data-scene="london" aria-label="London">
-                <img src="UK.jpg" alt="">
-            </button>
-            <button class="scene-card" data-scene="belgium" aria-label="Ghent / Brussels">
-                <img src="belgium.jpg" alt="">
-            </button>
-            <button class="scene-card" data-scene="japan" aria-label="Japan">
-                <img src="japan.webp" alt="">
-            </button>
-            <button class="scene-card" data-scene="brazil" aria-label="São Paulo / South America">
-                <img src="brazil.jpeg" alt="">
-            </button>
-            <button class="scene-card" data-scene="chicago" aria-label="Chicago"><img src="placeholder.svg" alt=""></button>
-            <button class="scene-card" data-scene="cologne" aria-label="Cologne"><img src="placeholder.svg" alt=""></button>
-            <button class="scene-card" data-scene="frankfurt" aria-label="Frankfurt"><img src="placeholder.svg" alt=""></button>
-            <button class="scene-card" data-scene="hamburg" aria-label="Hamburg"><img src="placeholder.svg" alt=""></button>
-            <button class="scene-card" data-scene="munich" aria-label="Munich"><img src="placeholder.svg" alt=""></button>
-            <button class="scene-card" data-scene="chemnitz" aria-label="Chemnitz / Dresden"><img src="placeholder.svg" alt=""></button>
-            <button class="scene-card" data-scene="sheffield" aria-label="Sheffield / Leeds"><img src="placeholder.svg" alt=""></button>
-            <button class="scene-card" data-scene="netherlands" aria-label="Netherlands"><img src="placeholder.svg" alt=""></button>
-            <button class="scene-card" data-scene="paris" aria-label="Paris"><img src="placeholder.svg" alt=""></button>
-            <button class="scene-card" data-scene="newyork" aria-label="New York"><img src="placeholder.svg" alt=""></button>
-            <button class="scene-card" data-scene="canada" aria-label="Canada"><img src="placeholder.svg" alt=""></button>
-            <button class="scene-card" data-scene="georgia" aria-label="Georgia / Eastern Europe"><img src="placeholder.svg" alt=""></button>
-            <button class="scene-card" data-scene="italy" aria-label="Italy"><img src="placeholder.svg" alt=""></button>
-            <button class="scene-card" data-scene="manchester" aria-label="Manchester"><img src="placeholder.svg" alt=""></button>
-        </div>
-
+        <div class="scenes-marquee-stack">
+            <div class="scenes-photo-marquee">
+                <div class="scenes-photo-track" id="scenes-photo-track"></div>
+                <div class="scenes-names-overlay">
+                    <div class="scenes-names-track" id="scenes-name-track"></div>
+                </div>
+            </div>
         </div>
 
         <article class="scene-text" id="scene-text">
             <div class="scene-title-row">
                 <h3 class="scene-title"></h3>
-                <div class="scene-nav-group">
-                    <button class="scene-nav scene-nav-prev" id="scene-prev" aria-label="Previous scene">←</button>
-                    <button class="scene-nav scene-nav-next" id="scene-next" aria-label="Next scene">→</button>
-                </div>
             </div>
             <p class="scene-body"></p>
         </article>
@@ -151,8 +117,7 @@
         <p><a href="library.html">Browse the full library →</a></p>    </footer>
 
     <script src="js/protect.js?v=1"></script>
-    <script src="js/hero.js?v=14"></script>
-    <script src="js/scenes.js?v=9"></script>
+    <script src="js/scenes.js?v=13"></script>
     <script src="js/trail.js?v=2"></script>
     <script src="js/covers-list.js?v=1"></script>
     <script src="js/pile.js?v=5"></script>

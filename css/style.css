@@ -1743,3 +1743,166 @@ body.is-home footer a { color: var(--text); }
 body.editing .card-remove { display: flex; }
 body.editing .release-card { cursor: default; }
 body.editing .release-card:hover { outline: 1px solid rgba(255,80,80,0.6); }
+
+/* ===== Scenes marquee: photos scroll left, city names overlay scrolls right ===== */
+.scenes-marquee-stack {
+    width: 100%;
+    margin-bottom: 3rem;
+    background: #000;
+}
+.scenes-photo-marquee {
+    position: relative;
+    width: 100%;
+    height: clamp(320px, 48vw, 540px);
+    overflow: hidden;
+    background: #000;
+}
+
+/* Photos — top-aligned row with per-orientation heights
+   (matches the 1350x1080 landscape vs 1080x1350 portrait spec). */
+.scenes-photo-track {
+    display: flex;
+    gap: 0;
+    align-items: flex-start; /* top-align landscape tiles against the row top */
+    width: max-content;
+    height: 100%;
+    animation: scenes-photo-marquee 140s linear infinite;
+    will-change: transform;
+}
+.marquee-item {
+    flex: 0 0 auto;
+    background: #111;
+    overflow: hidden;
+    cursor: pointer;
+}
+/* Landscape: 80% row height (1080/1350), top-aligned */
+.marquee-item.is-landscape {
+    height: 80%;
+    aspect-ratio: 1350 / 1080;
+}
+/* Portrait: full row height (1350/1350), top-aligned */
+.marquee-item.is-portrait {
+    height: 100%;
+    aspect-ratio: 1080 / 1350;
+}
+.marquee-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: grayscale(1) contrast(1.05);
+    transition: filter 0.25s ease;
+}
+.marquee-item:hover img { filter: grayscale(1) contrast(1.15) brightness(1.1); }
+
+/* City names — overlay, pinned to the very top of the photos, white, wide tracking */
+.scenes-names-overlay {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    overflow: hidden;
+    padding: 0;
+    pointer-events: none;
+    z-index: 2;
+    mix-blend-mode: difference;
+}
+.scenes-names-track {
+    display: flex;
+    gap: 0;
+    width: max-content;
+    align-items: flex-start;
+    animation: scenes-names-marquee 140s linear infinite;
+    will-change: transform;
+    pointer-events: auto;
+}
+.scene-name-btn {
+    background: transparent;
+    border: 0;
+    color: #fff;
+    font-family: 'Megatron Sans', 'Arial Black', Impact, sans-serif;
+    font-size: 64px;
+    font-weight: 700;
+    letter-spacing: 1.37em; /* 137% spacing */
+    text-transform: uppercase;
+    padding: 0;
+    cursor: pointer;
+    white-space: nowrap;
+    line-height: 1;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+    transition: opacity 0.2s ease;
+    opacity: 0.9;
+}
+.scene-name-btn:hover,
+.scene-name-btn.active { opacity: 1; }
+.scene-name-sep {
+    color: #fff;
+    font-size: 64px;
+    letter-spacing: 1.37em;
+    padding: 0 1.37em 0 0;
+    opacity: 0.5;
+    user-select: none;
+    line-height: 1;
+}
+@media (max-width: 720px) {
+    .scene-name-btn,
+    .scene-name-sep { font-size: 36px; }
+}
+
+@keyframes scenes-photo-marquee {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+}
+@keyframes scenes-names-marquee {
+    from { transform: translateX(-50%); }
+    to   { transform: translateX(0); }
+}
+
+@media (max-width: 720px) {
+    .scenes-photo-marquee { height: 280px; }
+    .scenes-photo-track { animation-duration: 100s; }
+    .scenes-names-track { animation-duration: 100s; }
+}
+
+/* ===== Global section rhythm (UX/UI vertical spacing) =====
+   8-pt scale. Desktop sections get 96px top/bottom padding, mobile 64px.
+   Blocks inside a section space at 48px / 32px. */
+:root {
+    --section-py: 6rem;       /* 96px */
+    --section-py-sm: 4rem;    /* 64px */
+    --block-gap: 3rem;        /* 48px */
+    --block-gap-sm: 2rem;     /* 32px */
+}
+
+.scenes,
+.ppi-essays,
+.about-section {
+    padding-top: var(--section-py) !important;
+    padding-bottom: var(--section-py) !important;
+}
+
+/* Scenes internal rhythm: intro → marquee → text, evenly spaced. */
+.scenes-intro { margin-bottom: var(--block-gap) !important; }
+.scenes-marquee-stack { margin-bottom: var(--block-gap) !important; }
+.scene-text { margin-top: 0 !important; }
+
+/* PPI kinetic iframe: breathe away from essays above and trail below. */
+.ppi-section { margin: var(--block-gap) 0 !important; }
+
+/* Trail (mouse path) already has inset padding; give it air around. */
+.trail-section { margin: var(--block-gap) 0 !important; }
+
+/* Footer spacing from about section. */
+footer { padding: var(--section-py) 1.5rem !important; }
+
+@media (max-width: 720px) {
+    .scenes,
+    .ppi-essays,
+    .about-section,
+    footer {
+        padding-top: var(--section-py-sm) !important;
+        padding-bottom: var(--section-py-sm) !important;
+    }
+    .scenes-intro,
+    .scenes-marquee-stack,
+    .ppi-section,
+    .trail-section { margin-bottom: var(--block-gap-sm) !important; }
+}
