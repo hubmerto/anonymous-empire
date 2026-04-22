@@ -1927,16 +1927,22 @@ footer { padding: var(--section-py) 1.5rem !important; }
     margin-left: auto;
 }
 .scene-text .scene-nav {
-    background: transparent;
-    border: 1px solid #fff;
-    color: #fff;
-    font-size: 1.1rem;
+    background: #fff;
+    border: 0;
+    color: #000;
+    width: 44px;
+    height: 44px;
+    font-size: 1.15rem;
+    font-weight: 800;
     line-height: 1;
-    padding: 0.55rem 0.85rem;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
-    transition: background 0.15s, color 0.15s;
+    transition: background 0.15s, color 0.15s, outline-color 0.15s;
 }
-.scene-text .scene-nav:hover { background: #fff; color: #000; }
+.scene-text .scene-nav:hover { background: #000; color: #fff; outline: 1px solid #fff; }
 
 /* ===== Legal pages (Impressum / Datenschutz) ===== */
 body.legal-page { background: #000; color: #e8e8e8; }
