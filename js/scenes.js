@@ -147,6 +147,23 @@ const SCENE_ORDER = [
 
         // Initial content — first scene
         render(SCENE_ORDER[0].key);
+        var currentKey = SCENE_ORDER[0].key;
+
+        // Track the active scene so prev/next know where we are.
+        var _render = render;
+        render = function(key){ currentKey = key; _render(key); };
+
+        function step(dir){
+            var keys = SCENE_ORDER.map(function(s){ return s.key; });
+            var i = keys.indexOf(currentKey);
+            if (i < 0) i = 0;
+            i = ((i + dir) % keys.length + keys.length) % keys.length;
+            render(keys[i]);
+        }
+        var prevBtn = document.getElementById('scene-prev');
+        var nextBtn = document.getElementById('scene-next');
+        if (prevBtn) prevBtn.addEventListener('click', function(){ step(-1); });
+        if (nextBtn) nextBtn.addEventListener('click', function(){ step(1); });
 
         // ---- photo marquee (scrolls left, slow) ------------------------
         if (photoTrack) {

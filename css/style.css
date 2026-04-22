@@ -1910,3 +1910,30 @@ footer { padding: var(--section-py) 1.5rem !important; }
     .ppi-section,
     .trail-section { margin-bottom: var(--block-gap-sm) !important; }
 }
+
+/* Scene title row — arrows sit at the end of the title */
+.scene-text .scene-title-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: flex-start;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin: 0 0 1.25rem;
+}
+.scene-text .scene-title { flex: 0 1 auto; margin: 0; }
+.scene-text .scene-nav-group {
+    display: inline-flex;
+    gap: 0.35rem;
+    margin-left: auto;
+}
+.scene-text .scene-nav {
+    background: transparent;
+    border: 1px solid #fff;
+    color: #fff;
+    font-size: 1.1rem;
+    line-height: 1;
+    padding: 0.55rem 0.85rem;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+}
+.scene-text .scene-nav:hover { background: #fff; color: #000; }
