@@ -1848,12 +1848,12 @@ body.editing .release-card:hover { outline: 1px solid rgba(255,80,80,0.6); }
 }
 
 @keyframes scenes-photo-marquee {
-    from { transform: translateX(0); }
-    to   { transform: translateX(-50%); }
-}
-@keyframes scenes-names-marquee {
     from { transform: translateX(-50%); }
     to   { transform: translateX(0); }
+}
+@keyframes scenes-names-marquee {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
 }
 
 @media (max-width: 720px) {
