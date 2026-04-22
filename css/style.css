@@ -1119,7 +1119,7 @@ footer a { text-decoration: underline; }
     height: 100%;
     animation: heroTitleJitter 2.4s ease-in-out infinite;
 }
-.hero-wordmark svg path { fill: #fff !important; animation: heroTitleHue 0.36s steps(1, end) infinite; }
+.hero-wordmark svg path { fill: #fff !important; animation: heroTitleHue 0.09s steps(1, end) infinite; }
 .hero-wordmark svg rect { fill: #0a0a0a !important; }
 @keyframes heroTitleJitter {
     0%, 100% { filter: none; }
