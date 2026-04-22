@@ -18,9 +18,7 @@
     idx++;
     var img = document.createElement('img');
     img.className = 'pile-cover';
-    img.src = 'images/' + src;
     img.alt = '';
-    img.loading = 'lazy';
 
     // Constrain so cover (35% wide, square) stays fully within container
     var rect = container.getBoundingClientRect();
@@ -32,7 +30,7 @@
     maxDyPct = Math.max(0, maxDyPct - 2);
     var dx = (Math.random() - 0.5) * 2 * maxDxPct;
     var dy = (Math.random() - 0.5) * 2 * maxDyPct;
-    var rot = (Math.random() - 0.5) * 12;
+    var rot = 0;
     img.style.left = 'calc(50% + ' + dx + '%)';
     img.style.top = 'calc(50% + ' + dy + '%)';
     var baseTransform = 'translate(-50%, -50%) rotate(' + rot + 'deg)';
@@ -41,7 +39,15 @@
     img.style.transition = 'none';
     img.style.zIndex = String(z++);
 
-    container.appendChild(img);
+    // Only mount the img after the bitmap has decoded — avoids showing an
+    // empty bordered card (shadow only) while the image loads.
+    var pre = new Image();
+    pre.onload = function(){
+      img.src = pre.src;
+      container.appendChild(img);
+    };
+    pre.onerror = function(){ /* drop silently */ };
+    pre.src = 'images/' + src;
 
     // Each cover lives 4s, then fades and is removed
     setTimeout(function(){

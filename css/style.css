@@ -1667,9 +1667,10 @@ body.is-home footer a { color: var(--text); }
     height: auto;
     aspect-ratio: 1 / 1;
     object-fit: cover;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.6), 0 2px 8px rgba(0,0,0,0.8);
-    transition: opacity 0.5s ease, transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
-    will-change: transform, opacity;
+    background: #111;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.55);
+    transition: opacity 0.5s ease;
+    will-change: opacity;
     pointer-events: none;
 }
 
