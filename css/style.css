@@ -2196,3 +2196,14 @@ body:not(.is-home) .site-header {
     position: static !important;
     top: auto !important;
 }
+
+/* Mobile: force Arial Black on all body copy (titles keep their chosen faces) */
+@media (max-width: 720px) {
+    .scenes-intro p,
+    .scene-text .scene-body,
+    .about-right p,
+    .ppi-col p,
+    .scene-more {
+        font-family: 'Arial Black', 'Helvetica Neue', Arial, sans-serif !important;
+    }
+}
