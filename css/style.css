@@ -1302,14 +1302,17 @@ footer a { text-decoration: underline; }
     margin-bottom: 4rem;
 }
 .scenes-intro p {
-    font-size: clamp(1.05rem, 1.35vw, 1.35rem);
-    line-height: 1.5;
-    font-weight: 500;
+    font-size: clamp(1.35rem, 2vw, 2rem);
+    line-height: 1.4;
+    font-weight: 600;
     letter-spacing: 0.01em;
     color: #e8e8e8;
     margin: 0 0 1.25rem;
     text-transform: uppercase;
-    max-width: 70ch;
+    max-width: 72ch;
+}
+@media (max-width: 720px) {
+    .scenes-intro p { font-size: clamp(1.35rem, 4.8vw, 1.8rem); line-height: 1.35; max-width: none; }
 }
 .scenes-intro p:last-child { margin-bottom: 0; }
 
@@ -1632,12 +1635,15 @@ body.is-home footer a { color: var(--text); }
 }
 .about-right p {
     text-transform: uppercase;
-    font-size: clamp(0.9rem, 1vw, 1.05rem);
-    line-height: 1.65;
+    font-size: clamp(1.2rem, 1.5vw, 1.55rem);
+    line-height: 1.5;
     letter-spacing: 0.01em;
-    margin: 0 0 1.25rem;
-    text-indent: 2.5em;
-    color: #cfcfcf;
+    margin: 0 0 1.5rem;
+    text-indent: 0;
+    color: #dcdcdc;
+}
+@media (max-width: 720px) {
+    .about-right p { font-size: clamp(1.2rem, 4.4vw, 1.6rem); line-height: 1.4; }
 }
 .about-right p:last-child { margin-bottom: 0; }
 @media (max-width: 900px) {
@@ -2081,3 +2087,14 @@ body:not(.is-home) .site-header { z-index: 1000 !important; }
 .leaflet-top,
 .leaflet-bottom { z-index: auto !important; }
 #map-container .leaflet-container { z-index: 1; }
+
+/* Mobile: bigger section headings + CTA for shorter lines */
+@media (max-width: 720px) {
+    .about-title { font-size: clamp(2.25rem, 8vw, 3rem) !important; line-height: 1 !important; }
+    .system-head h2 { font-size: clamp(2rem, 7vw, 2.75rem) !important; line-height: 1.05 !important; }
+    .ppi-col h3 { font-size: clamp(1.3rem, 5vw, 1.8rem) !important; }
+    .ppi-col p { font-size: clamp(1.05rem, 4vw, 1.35rem) !important; line-height: 1.45 !important; text-indent: 0 !important; }
+    .scene-text .scene-title { font-size: clamp(1.75rem, 6.5vw, 2.4rem) !important; }
+    .scene-text p { font-size: clamp(1.05rem, 4vw, 1.35rem) !important; line-height: 1.5 !important; text-indent: 0 !important; }
+    .about-cta a { font-size: 1rem; padding: 1rem 1.5rem; }
+}
