@@ -2179,3 +2179,14 @@ body:not(.is-home) .site-header { z-index: 1000 !important; }
     }
     .scene-more { display: inline-block; }
 }
+
+/* Mobile: CTA becomes a full-width centered block */
+@media (max-width: 720px) {
+    .about-cta { text-align: center !important; }
+    .about-cta a {
+        display: block;
+        width: 100%;
+        text-align: center;
+        padding: 1.15rem 1rem;
+    }
+}
