@@ -2190,3 +2190,9 @@ body:not(.is-home) .site-header { z-index: 1000 !important; }
         padding: 1.15rem 1rem;
     }
 }
+
+/* Library: search header sits at top of the page and scrolls away with content. Never overlaps grid/map. */
+body:not(.is-home) .site-header {
+    position: static !important;
+    top: auto !important;
+}
