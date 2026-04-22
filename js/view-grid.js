@@ -18,16 +18,18 @@ window.ViewGrid = {
         // Load-more button kept hidden — pagination removed per design.
         if (this.loadMore) this.loadMore.classList.remove('visible');
 
-        this.modeToggle.addEventListener('click', e => {
-            const btn = e.target.closest('.view-btn');
-            if (!btn) return;
-            const mode = btn.dataset.mode;
-            if (mode === this.currentMode) return;
-            this.currentMode = mode;
-            this.modeToggle.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            this.render(APP.filtered);
-        });
+        if (this.modeToggle) {
+            this.modeToggle.addEventListener('click', e => {
+                const btn = e.target.closest('.view-btn');
+                if (!btn) return;
+                const mode = btn.dataset.mode;
+                if (mode === this.currentMode) return;
+                this.currentMode = mode;
+                this.modeToggle.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                this.render(APP.filtered);
+            });
+        }
 
         this.isInitialized = true;
     },
