@@ -31,7 +31,7 @@
             };
             tryStart();
         } else {
-            fetch('data/releases.json')
+            fetch('/data/releases.json')
                 .then(r => r.json())
                 .then(d => start(hero, stage, d.releases))
                 .catch(err => console.error('hero: failed to load releases', err));

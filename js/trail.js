@@ -85,7 +85,7 @@
 
     function start() {
         // Use the page's hero-loaded data if available to avoid a second fetch.
-        fetch('data/releases.json')
+        fetch('/data/releases.json')
             .then(r => r.json())
             .then(d => init((d.releases || []).filter(r => r.image || r.thumb)))
             .catch(err => console.error('trail:', err));

@@ -20,7 +20,7 @@ const APP = {
 // --- Init ---
 async function init() {
     try {
-        const resp = await fetch('data/releases.json?v=' + Date.now());
+        const resp = await fetch('/data/releases.json?v=' + Date.now());
         if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
         APP.data = await resp.json();
     } catch (err) {
@@ -146,7 +146,8 @@ APP.createCard = function(release, compact) {
     card.setAttribute('role', 'button');
     card.setAttribute('tabindex', '0');
 
-    const imgSrc = release.image || release.thumb;
+    const rawSrc = release.image || release.thumb;
+    const imgSrc = rawSrc && !/^(https?:)?\/\//.test(rawSrc) && rawSrc[0] !== '/' ? '/' + rawSrc : rawSrc;
     if (imgSrc) {
         const img = document.createElement('img');
         img.setAttribute('data-src', imgSrc);
@@ -198,7 +199,8 @@ APP.openOverlay = function(release) {
     APP.currentRelease = release;
     APP.currentReleaseIdx = APP.filtered.indexOf(release);
 
-    const thumbUrl = release.image || release.thumb || '';
+    const rawThumb = release.image || release.thumb || '';
+    const thumbUrl = rawThumb && !/^(https?:)?\/\//.test(rawThumb) && rawThumb[0] !== '/' ? '/' + rawThumb : rawThumb;
     const discogsHref = APP.discogsUrl(release);
 
     // Color swatches
