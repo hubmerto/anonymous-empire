@@ -2103,3 +2103,20 @@ body:not(.is-home) .site-header { z-index: 1000 !important; }
     .scene-text p { font-size: clamp(1.05rem, 4vw, 1.35rem) !important; line-height: 1.5 !important; text-indent: 0 !important; }
     .about-cta a { font-size: 1rem; padding: 1rem 1.5rem; }
 }
+
+/* Mobile: collapse library brand to the AE monogram so it doesn't clash with view tabs */
+@media (max-width: 720px) {
+    .site-nav-brand--full {
+        font-size: 0;
+        line-height: 1;
+    }
+    .site-nav-brand--full::before {
+        content: "Æ";
+        font-family: 'Megatron Sans', 'Arial Black', Impact, sans-serif;
+        font-size: 1.9rem;
+        font-weight: 700;
+        letter-spacing: 0;
+        color: inherit;
+        display: inline-block;
+    }
+}
