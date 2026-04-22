@@ -117,7 +117,8 @@ window.ViewMap = {
                 const lat = baseLat + Math.cos(angle) * dist * 0.7;
                 const lng = baseLng + Math.sin(angle) * dist;
 
-                const src = r.image || r.thumb || '';
+                const rawSrc = r.image || r.thumb || '';
+                const src = rawSrc && !/^(https?:)?\/\//.test(rawSrc) && rawSrc[0] !== '/' ? '/' + rawSrc : rawSrc;
                 const size = 24;
 
                 let html;

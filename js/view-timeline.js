@@ -302,7 +302,8 @@ window.ViewTimeline = {
             thumb.className = 'tl-thumb';
             thumb.addEventListener('click', () => APP.openOverlay(r));
 
-            const imgSrc = r.image || r.thumb;
+            const rawSrc = r.image || r.thumb;
+            const imgSrc = rawSrc && !/^(https?:)?\/\//.test(rawSrc) && rawSrc[0] !== '/' ? '/' + rawSrc : rawSrc;
             if (imgSrc) {
                 const img = document.createElement('img');
                 img.setAttribute('data-src', imgSrc);
