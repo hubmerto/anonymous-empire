@@ -74,9 +74,12 @@ function populateFilters() {
 // --- Update header stats ---
 function updateStats() {
     const meta = APP.data.meta;
-    document.getElementById('stat-total').textContent = `${meta.total.toLocaleString()} releases`;
-    document.getElementById('stat-labels').textContent = `${meta.labels} labels`;
-    document.getElementById('stat-range').textContent = `${meta.year_range[0]}–${meta.year_range[1]}`;
+    const t = document.getElementById('stat-total');
+    const l = document.getElementById('stat-labels');
+    const r = document.getElementById('stat-range');
+    if (t) t.textContent = `${meta.total.toLocaleString()} releases`;
+    if (l) l.textContent = `${meta.labels} labels`;
+    if (r) r.textContent = `${meta.year_range[0]}–${meta.year_range[1]}`;
 }
 
 // --- View switching ---
