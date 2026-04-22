@@ -2246,3 +2246,14 @@ body:not(.legal-page) a:focus { text-decoration: none !important; }
         font-family: 'Megatron Sans', 'Arial Black', Impact, sans-serif !important;
     }
 }
+
+/* Library search header: always pinned at the top while scrolling */
+body:not(.is-home) .site-header {
+    position: sticky !important;
+    top: 72px !important;
+    z-index: 1000 !important;
+    background: #0a0a0a !important;
+}
+@media (max-width: 720px) {
+    body:not(.is-home) .site-header { top: 60px !important; }
+}
