@@ -81,38 +81,73 @@ window.ViewColor = {
     // Order: rainbow (red → purple), then black (dark tier), then white (light tier).
     // _bucketOf returns the rainbow-ordered index; we sort primarily by that,
     // then by hue within the bucket (for smooth transitions), then by lightness.
-    _sortKey(r) {
-        const hue = (typeof r.sort_hue === 'number') ? r.sort_hue : null;
-        const l = (r.hsl && typeof r.hsl.l === 'number') ? r.hsl.l : 0;
-        const bi = this._bucketOf(r);
-        const isAchromatic = (hue === null || hue < 0);
-        if (isAchromatic) {
-            // Dark tier: black (low L) first, lighter darks next.
-            // Light tier: less-light first, pure white last.
-            return [bi, l, 0];
+    // Perceptual chroma threshold — anything below this treats the cover as
+    // achromatic regardless of its dominant colour. Tuned so white/grey sleeves
+    // with a stray pop of colour still sort into the achromatic tier.
+    CHROMA_THRESHOLD: 22,
+
+    // Recompute a better (hue, lightness, chroma, isChromatic) from the palette.
+    // Previously we trusted extract_colors.py's sort_hue, which picked the
+    // dominant swatch and often mis-sorted near-grey covers.
+    _analyze(r) {
+        const palette = Array.isArray(r.palette) ? r.palette : [];
+        const primary = r.hsl || {};
+        // Circular-mean hue weighted by (frac × chroma)
+        let sumX = 0, sumY = 0, sumW = 0, chromaTotal = 0, totalFrac = 0, lightAvg = 0;
+        palette.forEach(p => {
+            const c = typeof p.c === 'number' ? p.c : 0;
+            const f = typeof p.frac === 'number' ? p.frac : 0;
+            const w = c * f;
+            const hRad = (p.h || 0) * Math.PI / 180;
+            sumX += Math.cos(hRad) * w;
+            sumY += Math.sin(hRad) * w;
+            sumW += w;
+            chromaTotal += c * f;
+            totalFrac += f;
+            lightAvg += (p.l || 0) * f;
+        });
+        const l = totalFrac > 0 ? lightAvg / totalFrac : (primary.l || 0);
+        let hue = 0;
+        if (sumW > 0.001) {
+            hue = Math.atan2(sumY, sumX) * 180 / Math.PI;
+            if (hue < 0) hue += 360;
+        } else if (typeof primary.h === 'number') {
+            hue = primary.h;
         }
-        return [bi, hue, l];
+        const effectiveChroma = totalFrac > 0 ? chromaTotal / totalFrac : 0;
+        const isChromatic = effectiveChroma >= this.CHROMA_THRESHOLD;
+        return { hue, l, chroma: effectiveChroma, isChromatic };
     },
 
-    _bucketOf(r) {
-        const hue = (typeof r.sort_hue === 'number') ? r.sort_hue : null;
-        const l = (r.hsl && typeof r.hsl.l === 'number') ? r.hsl.l : 0;
-        if (hue === null || hue < 0) {
-            return l >= this.LIGHT_L_THRESHOLD ? 13 : 12;
+    _sortKey(r) {
+        const a = this._analyze(r);
+        const bi = this._bucketOf(r, a);
+        if (!a.isChromatic) {
+            // Achromatic tier — sort by lightness (dark first, then light last)
+            return [bi, a.l, 0];
         }
-        // Rainbow-ordered bucket indices matching BUCKETS array
-        if (hue >= 345 || hue < 15) return 0;  // red
-        if (hue < 45)  return 1;  // orange
-        if (hue < 75)  return 2;  // amber
-        if (hue < 105) return 3;  // yellow
-        if (hue < 150) return 4;  // green
-        if (hue < 180) return 5;  // teal
-        if (hue < 210) return 6;  // cyan
-        if (hue < 240) return 7;  // blue
-        if (hue < 270) return 8;  // indigo
-        if (hue < 300) return 11; // purple (last chromatic)
-        if (hue < 330) return 9;  // magenta
-        return 10;                // pink
+        // Chromatic tier — sort by hue then lightness, with chroma as tiebreaker
+        return [bi, a.hue, a.l, -a.chroma];
+    },
+
+    _bucketOf(r, a) {
+        a = a || this._analyze(r);
+        if (!a.isChromatic) {
+            return a.l >= this.LIGHT_L_THRESHOLD ? 13 : 12;
+        }
+        const h = a.hue;
+        if (h >= 345 || h < 15) return 0;  // red
+        if (h < 45)  return 1;  // orange
+        if (h < 75)  return 2;  // amber
+        if (h < 105) return 3;  // yellow
+        if (h < 150) return 4;  // green
+        if (h < 180) return 5;  // teal
+        if (h < 210) return 6;  // cyan
+        if (h < 240) return 7;  // blue
+        if (h < 270) return 8;  // indigo
+        if (h < 300) return 11; // purple (last chromatic)
+        if (h < 330) return 9;  // magenta
+        return 10;              // pink
     },
 
     // ---- Spectrum -------------------------------------------------------
