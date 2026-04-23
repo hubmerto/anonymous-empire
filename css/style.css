@@ -2543,3 +2543,30 @@ body:not(.is-home) .site-nav-brand {
     body:not(.is-home) .site-nav-brand { font-size: 1.75rem !important; }
     body:not(.is-home) .site-nav-links a { font-size: 0.85rem !important; }
 }
+
+/* Library/legal: nav + search are static at the very top and scroll away with the page */
+body:not(.is-home) {
+    padding-top: 0 !important;
+}
+body:not(.is-home) .site-nav {
+    position: static !important;
+    top: auto !important;
+    z-index: auto !important;
+    background: #0a0a0a !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+}
+body:not(.is-home) .site-header {
+    position: static !important;
+    top: auto !important;
+    bottom: auto !important;
+    z-index: auto !important;
+}
+@media (max-width: 720px) {
+    body:not(.is-home) .site-header {
+        position: static !important;
+        top: auto !important;
+        bottom: auto !important;
+    }
+    body:not(.is-home) main { padding-bottom: 0 !important; }
+}
