@@ -2288,7 +2288,7 @@ body:not(.is-home) .site-header {
     .scene-text .scene-body .scene-lead,
     .ppi-col .ppi-body .scene-lead {
         display: block;
-        font-size: clamp(1.25rem, 5vw, 1.5rem) !important;
+        font-size: clamp(28px, 7vw, 32px) !important;
         line-height: 1.1;
         letter-spacing: 0.005em;
         font-weight: 900;
@@ -2340,4 +2340,15 @@ body:not(.is-home) .site-header {
         font-family: 'Arial Black', 'Helvetica Neue', Arial, sans-serif !important;
     }
     html body svg { font-family: inherit; }
+}
+
+/* Intro: center-aligned, evenly spaced between hero and marquee */
+.scenes-intro {
+    text-align: center !important;
+    padding: 4rem 1.5rem !important;
+    margin: 0 auto !important;
+}
+.scenes-intro p { margin-left: auto !important; margin-right: auto !important; }
+@media (max-width: 720px) {
+    .scenes-intro { padding: 3rem 1.25rem !important; }
 }
