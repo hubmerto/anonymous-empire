@@ -2646,24 +2646,16 @@ html body .scene-name-sep {
 .grid.size-2x { grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); }
 .grid.size-3x { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
 
-/* Meticulously boxed paragraph formatting — justified edges, hyphenation, tight measure */
+/* Paragraph formatting — left-aligned with pretty text wrap so lines balance
+   themselves without the river-gaps that justified text creates in a wide face
+   like Arial Black. */
 .scene-text .scene-body,
 .ppi-col .ppi-body {
-    text-align: justify !important;
-    hyphens: auto;
-    -webkit-hyphens: auto;
-    text-justify: inter-word;
-    word-spacing: 0.02em;
+    text-align: left !important;
+    text-wrap: pretty;
+    hyphens: manual;
+    -webkit-hyphens: manual;
+    word-spacing: normal;
 }
 .scene-text .scene-body .scene-rest,
-.ppi-col .ppi-body .scene-rest {
-    display: inline;
-}
-@media (max-width: 720px) {
-    .scene-text.expanded .scene-body .scene-rest,
-    .ppi-col.expanded .ppi-body .scene-rest {
-        text-align: justify !important;
-        hyphens: auto;
-        -webkit-hyphens: auto;
-    }
-}
+.ppi-col .ppi-body .scene-rest { display: inline; }
