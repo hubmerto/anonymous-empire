@@ -2570,3 +2570,9 @@ body:not(.is-home) .site-header {
     }
     body:not(.is-home) main { padding-bottom: 0 !important; }
 }
+
+/* Scene-name marquee (city carousel) — Megatron Sans on every breakpoint */
+html body .scene-name-btn,
+html body .scene-name-sep {
+    font-family: 'Megatron Sans', 'Megatron', 'Arial Black', Impact, sans-serif !important;
+}
