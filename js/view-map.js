@@ -36,11 +36,29 @@ window.ViewMap = {
             maxBoundsViscosity: 1.0,
         }).setView([40, 5], 4);
 
-        // Plain dark map — no labels, no state/province lines — just land masses
-        L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png', {
-            subdomains: 'abcd',
-            maxZoom: 19,
-        }).addTo(this.map);
+        // No tile layer — render countries only from a static GeoJSON so the
+        // map has zero subdivisions, no state lines, no labels.
+        this.mapEl.style.background = '#0a0a0a';
+        fetch('https://cdn.jsdelivr.net/npm/world-atlas-geojson@1.0.0/countries-50m.json')
+            .catch(() => fetch('https://raw.githubusercontent.com/johan/world.geo.json/master/countries.geo.json'))
+            .then(r => r.ok ? r.json() : Promise.reject())
+            .then(geo => {
+                L.geoJSON(geo, {
+                    style: {
+                        fillColor: '#1a1a1a',
+                        fillOpacity: 1,
+                        color: '#222',
+                        weight: 0.6,
+                        opacity: 1,
+                    },
+                    interactive: false,
+                }).addTo(this.map);
+            })
+            .catch(err => console.warn('Country GeoJSON failed, falling back to dark tiles:', err)
+                || L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png', {
+                    subdomains: 'abcd',
+                    maxZoom: 19,
+                }).addTo(this.map));
 
         this.layerGroup = L.layerGroup().addTo(this.map);
 
