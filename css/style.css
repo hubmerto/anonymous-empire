@@ -2440,9 +2440,8 @@ body:not(.is-home) .site-header {
 .about-left, .about-right { display: contents !important; }
 .about-title { order: 1; }
 .about-right > p { order: 2; }
-.about-right > .about-cta { order: 3; }
 .about-left > #cover-pile {
-    order: 4;
+    order: 3;
     width: 100%;
     aspect-ratio: 1 / 1;
     max-height: min(60vw, 520px);
@@ -2450,6 +2449,7 @@ body:not(.is-home) .site-header {
     overflow: hidden;
     position: relative;
 }
+.about-right > .about-cta { order: 4; }
 
 /* Keep Megatron on every headline, including on mobile (override the Arial Black blanket) */
 html body .about-title,
@@ -2507,3 +2507,9 @@ html body .site-nav-links a {
         font-family: 'Arial Black', 'Helvetica Neue', Arial, sans-serif !important;
     }
 }
+
+/* Final order lock: pile sits between paragraph and CTA on every breakpoint */
+.about-title { order: 1 !important; }
+.about-right > p { order: 2 !important; }
+.about-left > #cover-pile { order: 3 !important; }
+.about-right > .about-cta { order: 4 !important; }
