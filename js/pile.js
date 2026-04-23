@@ -20,21 +20,23 @@
     img.className = 'pile-cover';
     img.alt = '';
 
-    // Constrain so cover (35% wide, square) stays fully within container
+    // Slight size variation so covers don't all read as identical stamps
+    var scale = 0.88 + Math.random() * 0.24; // 0.88 – 1.12
+    var basePct = 35 * scale;
     var rect = container.getBoundingClientRect();
-    var coverW = rect.width * 0.35;
-    var coverH = coverW; // square
+    var coverW = rect.width * (basePct / 100);
     var maxDxPct = rect.width > 0 ? ((rect.width - coverW) / 2) / rect.width * 100 : 15;
-    var maxDyPct = rect.height > 0 ? ((rect.height - coverH) / 2) / rect.height * 100 : 15;
+    var maxDyPct = rect.height > 0 ? ((rect.height - coverW) / 2) / rect.height * 100 : 15;
     maxDxPct = Math.max(0, maxDxPct - 2);
     maxDyPct = Math.max(0, maxDyPct - 2);
     var dx = (Math.random() - 0.5) * 2 * maxDxPct;
     var dy = (Math.random() - 0.5) * 2 * maxDyPct;
-    var rot = 0;
+    var rot = (Math.random() - 0.5) * 10; // ±5deg
+    img.style.width = basePct + '%';
     img.style.left = 'calc(50% + ' + dx + '%)';
     img.style.top = 'calc(50% + ' + dy + '%)';
-    var baseTransform = 'translate(-50%, -50%) rotate(' + rot + 'deg)';
-    img.style.transform = baseTransform + ' scale(1)';
+    var baseTransform = 'translate(-50%, -50%) rotate(' + rot.toFixed(2) + 'deg)';
+    img.style.transform = baseTransform;
     img.style.opacity = '1';
     img.style.transition = 'none';
     img.style.zIndex = String(z++);
