@@ -2428,3 +2428,25 @@ body:not(.is-home) .site-header {
         line-height: 1.15 !important;
     }
 }
+
+/* About: stack vertically — cover pile sits at the bottom of the section on every breakpoint */
+.about-section {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 2rem !important;
+    align-items: stretch !important;
+    grid-template-columns: none !important;
+}
+.about-left, .about-right { display: contents !important; }
+.about-title { order: 1; }
+.about-right > p { order: 2; }
+.about-right > .about-cta { order: 3; }
+.about-left > #cover-pile {
+    order: 4;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    max-height: min(60vw, 520px);
+    height: auto;
+    overflow: hidden;
+    position: relative;
+}
