@@ -143,6 +143,7 @@ const SCENE_ORDER = [
     { key: 'munich',     label: 'Munich',           file: 'Munich.png',     orient: 'p' },
     { key: 'saopaulo',   label: 'Sao Paulo',        file: 'Sao Paulo.png',  orient: 'l' },
     { key: 'leipzig',    label: 'Leipzig',          file: 'Leipzig.png',    orient: 'p' },
+    { key: 'chicago',    label: 'Chicago',          file: 'Chicago.png',    orient: 'l', photoOnly: true },
     { key: 'copenhagen', label: 'Copenhagen',       file: 'Copenhagen.png', orient: 'p' },
 ];
 
@@ -204,7 +205,7 @@ const SCENE_ORDER = [
         render = function(key){ currentKey = key; _render(key); };
 
         function step(dir){
-            var keys = SCENE_ORDER.map(function(s){ return s.key; });
+            var keys = SCENE_ORDER.filter(function(s){ return !s.photoOnly; }).map(function(s){ return s.key; });
             var i = keys.indexOf(currentKey);
             if (i < 0) i = 0;
             i = ((i + dir) % keys.length + keys.length) % keys.length;
@@ -247,7 +248,7 @@ const SCENE_ORDER = [
                 return btn;
             }
             [0,1].forEach(function(){
-                SCENE_ORDER.forEach(function(p){
+                SCENE_ORDER.filter(function(p){ return !p.photoOnly; }).forEach(function(p){
                     nameTrack.appendChild(buildName(p));
                     var sep = document.createElement('span');
                     sep.className = 'scene-name-sep';
