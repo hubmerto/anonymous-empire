@@ -2499,3 +2499,11 @@ html body .site-nav-links a {
     }
     body:not(.is-home) main { padding-bottom: 0 !important; }
 }
+
+/* Footer: force Arial Black on mobile (blanket) */
+@media (max-width: 720px) {
+    html body footer,
+    html body footer * {
+        font-family: 'Arial Black', 'Helvetica Neue', Arial, sans-serif !important;
+    }
+}
