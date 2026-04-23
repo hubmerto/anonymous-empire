@@ -2460,3 +2460,21 @@ html body .legal-main h1,
 html body .legal-main h2 {
     font-family: 'Megatron Sans', 'Megatron', 'Arial Black', Impact, sans-serif !important;
 }
+
+/* Mobile library: search header fixed at the BOTTOM of the viewport, never covering the grid */
+@media (max-width: 720px) {
+    body:not(.is-home) .site-header {
+        position: fixed !important;
+        top: auto !important;
+        left: 0 !important;
+        right: 0 !important;
+        bottom: 0 !important;
+        z-index: 1000 !important;
+        background: #0a0a0a !important;
+        padding: 0.75rem 1rem !important;
+        border-top: 1px solid #1a1a1a;
+        box-shadow: 0 -4px 16px rgba(0,0,0,0.6);
+    }
+    /* Push main content up so the fixed bottom bar never overlaps the last rows */
+    body:not(.is-home) main { padding-bottom: 180px !important; }
+}
