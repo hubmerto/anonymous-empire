@@ -2362,3 +2362,22 @@ body:not(.is-home) .site-header {
     padding: 0.15rem 0.55rem !important;
     letter-spacing: 0 !important;
 }
+
+/* Align city title height with the 44px nav arrows */
+.scene-text .scene-title-row { align-items: center !important; }
+.scene-text .scene-title {
+    font-size: 32px !important;
+    line-height: 44px !important;
+    margin: 0 !important;
+}
+
+/* Intro + CTA share the 28–32px display range */
+.scenes-intro p {
+    font-size: clamp(28px, 7vw, 32px) !important;
+    line-height: 1.2 !important;
+}
+.about-cta a {
+    font-size: clamp(28px, 7vw, 32px) !important;
+    line-height: 1.1 !important;
+    letter-spacing: 0.02em !important;
+}
