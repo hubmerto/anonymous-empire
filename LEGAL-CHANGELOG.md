@@ -7,6 +7,14 @@ diff constitute independent proof of when a clause was in effect.
 
 ---
 
+## 2026-04-23 — Datenschutz v1.1
+
+**Datenschutzerklärung**
+- Removed Google Fonts (fonts.googleapis.com, fonts.gstatic.com) disclosure — the CDN is no longer loaded. Site now uses system-installed fonts (Arial Black, Helvetica Neue fallback; Megatron Sans self-hosted for brand).
+- Removed jsDelivr disclosure — no longer loaded.
+- Only remaining third-party network resources: unpkg (Leaflet map library) and OpenStreetMap tile server.
+- GDPR posture: eliminated the US data transfer for font delivery, closing the LG München I (2022) risk vector.
+
 ## 2026-04-22 — Impressum v1.1 / Datenschutz v1.0
 
 **Impressum**

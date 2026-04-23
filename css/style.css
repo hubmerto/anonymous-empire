@@ -26,14 +26,14 @@ body, html, * { font-family: 'Arial Black', 'Helvetica Neue', Arial, sans-serif 
     --text-muted: #555555;
     --accent: #ffffff;
     --accent-dim: #aaaaaa;
-    --mono: 'Megatron Sans', 'IBM Plex Mono', 'Consolas', monospace;
-    --sans: 'Megatron Sans', 'IBM Plex Sans', 'Helvetica Neue', sans-serif;
+    --mono: 'Megatron Sans', ui-monospace, 'Consolas', monospace;
+    --sans: 'Megatron Sans', 'Arial Black', 'Helvetica Neue', Arial, sans-serif;
     --grid-gap: 2px;
 }
 
 /* --- Reset --- */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { font-size: 14px; -webkit-font-smoothing: antialiased; }
+html { font-size: 14px; }
 body {
     background: var(--bg);
     color: var(--text);
@@ -2402,3 +2402,58 @@ body.gs-2 .timeline-strip { --tl-thumb-size: 72px !important; }
 body.gs-3 .grid,
 body.gs-3 .color-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)) !important; }
 body.gs-3 .timeline-strip { --tl-thumb-size: 112px !important; }
+
+/* ===== Typography hardening (2026 best practices) ===== */
+
+/* Headlines — prevent lone short words on last line */
+.about-title,
+.system-head h2,
+.scene-text .scene-title,
+.ppi-col h3,
+.legal-main h1,
+.legal-main h2,
+.scenes-intro p {
+    text-wrap: balance;
+}
+
+/* Uppercase text — enable OpenType "case" feature so punctuation
+   (parens, quotes, dashes) adjusts to caps height. Use font-variant
+   form so it merges through the cascade cleanly. */
+h1, h2, h3, h4,
+.about-title,
+.about-cta a,
+.scene-text .scene-title,
+.scenes-intro p,
+.ppi-col h3,
+.site-nav-links a,
+.scene-name-btn,
+.legal-main h1,
+.legal-main h2 {
+    font-feature-settings: "case" 1, "kern" 1;
+}
+
+/* Arabic / Hebrew / Devanagari / Thai — disable letter-spacing which
+   breaks cursive joining and cluster shaping. No-op right now (site is
+   English only) but kept as a defensive guard for future localisation. */
+:lang(ar), :lang(he), :lang(hi), :lang(th) {
+    letter-spacing: normal !important;
+}
+
+/* Respect reduced-motion preference: halt kinetic animations that could
+   trigger vestibular discomfort (WCAG 2.2 SC 2.3.3). */
+@media (prefers-reduced-motion: reduce) {
+    .scenes-photo-track,
+    .scenes-names-track {
+        animation: none !important;
+    }
+    .hero-wordmark svg path { animation: none !important; fill: #fff !important; }
+    .hero-wordmark svg rect { fill: transparent !important; }
+    .pile-cover { transition: none !important; }
+    .ppi-section iframe,
+    .trail-frame { filter: saturate(0.7) brightness(0.9); }
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
