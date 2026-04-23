@@ -2478,3 +2478,9 @@ html body .legal-main h2 {
     /* Push main content up so the fixed bottom bar never overlaps the last rows */
     body:not(.is-home) main { padding-bottom: 180px !important; }
 }
+
+/* Nav links — Megatron Sans on every breakpoint */
+html body .site-nav-links,
+html body .site-nav-links a {
+    font-family: 'Megatron Sans', 'Megatron', 'Arial Black', Impact, sans-serif !important;
+}
