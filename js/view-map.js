@@ -36,7 +36,8 @@ window.ViewMap = {
             maxBoundsViscosity: 1.0,
         }).setView([40, 5], 4);
 
-        L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+        // Plain dark map — no labels, no state/province lines — just land masses
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png', {
             subdomains: 'abcd',
             maxZoom: 19,
         }).addTo(this.map);
