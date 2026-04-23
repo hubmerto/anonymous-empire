@@ -2659,3 +2659,16 @@ html body .scene-name-sep {
 }
 .scene-text .scene-body .scene-rest,
 .ppi-col .ppi-body .scene-rest { display: inline; }
+
+/* Grid-size switcher applies across all archive views */
+body.gs-1 .grid,
+body.gs-1 .color-grid { grid-template-columns: repeat(auto-fill, minmax(48px, 1fr)) !important; }
+body.gs-1 .timeline-strip { --tl-thumb-size: 40px !important; }
+
+body.gs-2 .grid,
+body.gs-2 .color-grid { grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)) !important; }
+body.gs-2 .timeline-strip { --tl-thumb-size: 72px !important; }
+
+body.gs-3 .grid,
+body.gs-3 .color-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)) !important; }
+body.gs-3 .timeline-strip { --tl-thumb-size: 112px !important; }

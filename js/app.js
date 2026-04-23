@@ -355,16 +355,18 @@ function setupEventListeners() {
         document.getElementById(id).addEventListener('change', applyFilters);
     });
 
-    // Grid size switcher (1× / 2× / 3×)
-    const gridEl = document.getElementById('grid');
-    if (gridEl && !gridEl.classList.contains('size-1x')) gridEl.classList.add('size-1x');
+    // Grid size switcher (1× / 2× / 3×) — applies to every archive view
+    if (!document.body.classList.contains('gs-1') &&
+        !document.body.classList.contains('gs-2') &&
+        !document.body.classList.contains('gs-3')) {
+        document.body.classList.add('gs-1');
+    }
     document.querySelectorAll('.grid-size-btn').forEach(btn => {
         btn.addEventListener('click', () => {
             const size = btn.dataset.size;
             document.querySelectorAll('.grid-size-btn').forEach(b => b.classList.toggle('active', b === btn));
-            if (!gridEl) return;
-            gridEl.classList.remove('size-1x', 'size-2x', 'size-3x');
-            gridEl.classList.add('size-' + size + 'x');
+            document.body.classList.remove('gs-1', 'gs-2', 'gs-3');
+            document.body.classList.add('gs-' + size);
         });
     });
 
