@@ -2450,3 +2450,13 @@ body:not(.is-home) .site-header {
     overflow: hidden;
     position: relative;
 }
+
+/* Keep Megatron on every headline, including on mobile (override the Arial Black blanket) */
+html body .about-title,
+html body .system-head h2,
+html body .scene-text .scene-title,
+html body .ppi-col h3,
+html body .legal-main h1,
+html body .legal-main h2 {
+    font-family: 'Megatron Sans', 'Megatron', 'Arial Black', Impact, sans-serif !important;
+}
