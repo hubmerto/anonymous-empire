@@ -2352,3 +2352,13 @@ body:not(.is-home) .site-header {
 @media (max-width: 720px) {
     .scenes-intro { padding: 3rem 1.25rem !important; }
 }
+
+/* + / − toggle buttons: bigger, no underline */
+.scene-more,
+.ppi-more {
+    font-size: 1.75rem !important;
+    line-height: 1 !important;
+    text-decoration: none !important;
+    padding: 0.15rem 0.55rem !important;
+    letter-spacing: 0 !important;
+}

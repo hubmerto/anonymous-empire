@@ -162,7 +162,7 @@ const SCENE_ORDER = [
             textEl.classList.add('fading');
             textEl.classList.remove('expanded'); // collapse whenever scene changes
             var moreBtn = document.getElementById('scene-more');
-            if (moreBtn) moreBtn.textContent = 'Read more';
+            if (moreBtn) moreBtn.textContent = '+';
             setTimeout(function(){
                 titleEl.textContent = s.title;
                 // Clear body, rebuild with a lead + rest span so mobile can
@@ -191,7 +191,7 @@ const SCENE_ORDER = [
         if (moreBtn) {
             moreBtn.addEventListener('click', function(){
                 var expanded = textEl.classList.toggle('expanded');
-                moreBtn.textContent = expanded ? 'Read less' : 'Read more';
+                moreBtn.textContent = expanded ? '−' : '+';
             });
         }
 
