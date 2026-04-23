@@ -2607,3 +2607,15 @@ html body .scene-name-sep {
         letter-spacing: 0.06em !important;
     }
 }
+
+/* Desktop About: clip any cover that exceeds the pile's box */
+@media (min-width: 901px) {
+    .about-left > #cover-pile {
+        overflow: hidden !important;
+        min-height: 360px !important;
+    }
+    .about-left > #cover-pile .pile-cover {
+        width: 38% !important;
+        max-width: 240px;
+    }
+}
