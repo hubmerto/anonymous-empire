@@ -27,7 +27,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css?v=92">
+    <link rel="stylesheet" href="css/style.css?v=93">
 </head>
 <body class="is-home">
     <nav class="site-nav site-nav--over-hero">
@@ -100,18 +100,18 @@
     <section class="ppi-essays">
       <article class="ppi-col">
         <h3>Poverty</h3>
-        <p>Techno was invented by people who couldn't afford to make it look expensive. Juan Atkins drew the Metroplex logo with a ruler because hiring a designer wasn't an option. The earliest records arrived in generic sleeves, hand-stamped labels, or no packaging at all. Just a white sticker on a white disc. This wasn't a stylistic decision. It was Tuesday.</p>
-        <p>But when the scene grew and money became available, the austerity stayed. Basic Channel could have afforded glossy artwork by the mid-1990s. They kept pressing near-blank sleeves with embossed text you could barely read. In every other genre, success brings visual escalation: bigger portraits, richer colors, shinier finishes. Techno did the opposite. It doubled down on less. When you build something powerful out of almost nothing, decoration starts to feel dishonest. The blankness isn't absence. It's confidence.</p>
+        <p class="ppi-body"><span class="scene-lead">Techno was invented by people who couldn't afford to make it look expensive. Juan Atkins drew the Metroplex logo with a ruler because hiring a designer wasn't an option. The earliest records arrived in generic sleeves, hand-stamped labels, or no packaging at all. Just a white sticker on a white disc.</span> <span class="scene-rest">This wasn't a stylistic decision. It was Tuesday. But when the scene grew and money became available, the austerity stayed. Basic Channel could have afforded glossy artwork by the mid-1990s. They kept pressing near-blank sleeves with embossed text you could barely read. In every other genre, success brings visual escalation: bigger portraits, richer colors, shinier finishes. Techno did the opposite. It doubled down on less. When you build something powerful out of almost nothing, decoration starts to feel dishonest. The blankness isn't absence. It's confidence.</span></p>
+        <button class="ppi-more" type="button">Read more</button>
       </article>
       <article class="ppi-col">
         <h3>Politics</h3>
-        <p>In 1989, Underground Resistance declared war on the music industry. Members performed in ski masks. They refused press photos. They scratched anti-corporate messages into vinyl run-out grooves. Drexciya went further, replacing their faces entirely with an Afrofuturist underwater mythology. No portraits, no bios, no interviews. Just the sound and the world it built.</p>
-        <p>This wasn't performance art. It was a direct refusal of how the industry commodifies artists, especially Black artists. Techno said: the music is the work, not the personality. That political position naturally produces a visual culture that suppresses the human face, rejects celebrity, and foregrounds abstraction. Every faceless sleeve is a quiet act of resistance against an industry that wants to sell you a person instead of a sound.</p>
+        <p class="ppi-body"><span class="scene-lead">In 1989, Underground Resistance declared war on the music industry. Members performed in ski masks. They refused press photos. They scratched anti-corporate messages into vinyl run-out grooves. Drexciya went further, replacing their faces entirely with an Afrofuturist underwater mythology. No portraits, no bios, no interviews. Just the sound and the world it built.</span> <span class="scene-rest">This wasn't performance art. It was a direct refusal of how the industry commodifies artists, especially Black artists. Techno said: the music is the work, not the personality. That political position naturally produces a visual culture that suppresses the human face, rejects celebrity, and foregrounds abstraction. Every faceless sleeve is a quiet act of resistance against an industry that wants to sell you a person instead of a sound.</span></p>
+        <button class="ppi-more" type="button">Read more</button>
       </article>
       <article class="ppi-col">
         <h3>Post-Industry</h3>
-        <p>Techno was born in cities where manufacturing had already left. Detroit's auto plants were closing. Berlin's power stations stood empty after reunification. The music moved into the wreckage: abandoned factories, derelict bank vaults, concrete shells with no heating and no permits. These weren't venue choices. They were the only spaces available.</p>
-        <p>The artwork mirrors the architecture because both come from the same condition. You don't put pastel gradients on a record conceived inside a brutalist bunker. Tresor opened in 1991 inside the rusted vault of a demolished department store. Heavy steel doors, metal bars, strobes cutting through fog. Monochrome palettes, raw typography, industrial textures. The spaces dictated what felt true, and the visual language wrote itself. Techno's identity isn't designed from the outside. It grows from the concrete up.</p>
+        <p class="ppi-body"><span class="scene-lead">Techno was born in cities where manufacturing had already left. Detroit's auto plants were closing. Berlin's power stations stood empty after reunification. The music moved into the wreckage: abandoned factories, derelict bank vaults, concrete shells with no heating and no permits. These weren't venue choices. They were the only spaces available.</span> <span class="scene-rest">The artwork mirrors the architecture because both come from the same condition. You don't put pastel gradients on a record conceived inside a brutalist bunker. Tresor opened in 1991 inside the rusted vault of a demolished department store. Heavy steel doors, metal bars, strobes cutting through fog. Monochrome palettes, raw typography, industrial textures. The spaces dictated what felt true, and the visual language wrote itself. Techno's identity isn't designed from the outside. It grows from the concrete up.</span></p>
+        <button class="ppi-more" type="button">Read more</button>
       </article>
     </section>
 
@@ -137,7 +137,7 @@
     </footer>
 
     <script src="js/protect.js?v=1"></script>
-    <script src="js/scenes.js?v=16"></script>
+    <script src="js/scenes.js?v=17"></script>
     <script src="js/trail.js?v=2"></script>
     <script src="js/covers-list.js?v=1"></script>
     <script src="js/pile.js?v=6"></script>
@@ -151,6 +151,16 @@
         }
         update();
         window.addEventListener('scroll', update, { passive: true });
+      })();
+      // PPI essay read-more toggles (mobile only — CSS hides the button on desktop)
+      (function(){
+        document.querySelectorAll('.ppi-col .ppi-more').forEach(function(btn){
+          btn.addEventListener('click', function(){
+            var col = btn.closest('.ppi-col');
+            var on = col.classList.toggle('expanded');
+            btn.textContent = on ? 'Read less' : 'Read more';
+          });
+        });
       })();
     </script>
 </body>

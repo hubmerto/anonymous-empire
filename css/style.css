@@ -2277,3 +2277,55 @@ body:not(.is-home) .site-header {
         font-family: 'Arial Black', 'Helvetica Neue', Arial, sans-serif !important;
     }
 }
+
+/* Lead + rest split (scene essays & PPI essays) */
+/* Desktop: flow inline as one paragraph with regular weight/size. */
+.scene-lead,
+.scene-rest { display: inline; }
+
+/* Mobile: lead gets 64px display weight; rest collapses behind Read more. */
+@media (max-width: 720px) {
+    .scene-text .scene-body .scene-lead,
+    .ppi-col .ppi-body .scene-lead {
+        display: block;
+        font-size: 64px !important;
+        line-height: 1.08;
+        letter-spacing: 0.005em;
+        font-weight: 900;
+        margin-bottom: 1rem;
+    }
+    .scene-text .scene-body .scene-rest,
+    .ppi-col .ppi-body .scene-rest {
+        display: none;
+        font-size: clamp(1rem, 4vw, 1.3rem) !important;
+        line-height: 1.45;
+    }
+    .scene-text.expanded .scene-body .scene-rest,
+    .ppi-col.expanded .ppi-body .scene-rest { display: block; margin-top: 0.75rem; }
+
+    /* On mobile the scene body's line-clamp no longer makes sense — lead isn't clamped and rest is hidden. */
+    .scene-text .scene-body {
+        display: block;
+        -webkit-line-clamp: unset;
+        line-clamp: unset;
+        overflow: visible;
+    }
+}
+
+/* PPI read-more button — visible only on mobile */
+.ppi-more {
+    display: none;
+    margin-top: 1rem;
+    background: transparent;
+    border: 0;
+    padding: 0.25rem 0;
+    color: #fff;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    font-size: 0.95rem;
+    cursor: pointer;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+}
+@media (max-width: 720px) { .ppi-more { display: inline-block; } }
