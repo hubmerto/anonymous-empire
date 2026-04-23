@@ -141,7 +141,7 @@ const SCENE_ORDER = [
     { key: 'tbilisi',    label: 'Tbilisi',          file: 'Tbilisi.png',    orient: 'p' },
     { key: 'warsaw',     label: 'Warsaw',           file: 'Warsaw.png',     orient: 'l' },
     { key: 'munich',     label: 'Munich',           file: 'Munich.png',     orient: 'p' },
-    { key: 'saopaulo',   label: 'São Paulo',        file: 'Sao Paulo.png',  orient: 'l' },
+    { key: 'saopaulo',   label: 'Sao Paulo',        file: 'Sao Paulo.png',  orient: 'l' },
     { key: 'leipzig',    label: 'Leipzig',          file: 'Leipzig.png',    orient: 'p' },
     { key: 'copenhagen', label: 'Copenhagen',       file: 'Copenhagen.png', orient: 'p' },
 ];
