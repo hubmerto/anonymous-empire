@@ -17,7 +17,7 @@ const SCENES = {
         body: "The physical environment dictated the visual vocabulary entirely: metal, concrete, industrial fog, no natural light. You did not need to invent an aesthetic when the architecture provided one. Basic Channel reduced the sleeve to near-zero information. Cryptic lettering, embossed logos barely visible to the eye. No designer credits exist for their output. This was not minimalism as style. It was minimalism as material fact: the sleeve carried only what was structurally necessary. Ostgut Ton's Yusuf Etiman built Berghain's visual identity by refusing to look at what other labels did. Vanja Golubovic redesigned Tresor's visual system from 2014 using Px Grotesk, grid-based layouts, and annual thematic guidelines. PAN moved the other direction entirely, building an algorithmic platform that treats artwork as mutable code. Berlin's post-reunification vacuum gave designers an unprecedented condition: no commercial expectations, no inherited brand language, no market pressure. The city's techno visual culture was built inside the gap between two political systems, in spaces that belonged to neither.",
     },
     belgium: {
-        title: "Ghent / Brussels",
+        title: "Belgium",
         lead: "Belgium's textile and steel industries left behind cheap warehouse space and a small country with outsized cultural ambition. R&S Records was founded in Ghent in 1983 by Renaat Vandepapeliere and Sabine Maes. Joey Beltram's \"Energy Flash\" came out on R&S in 1990. Fuse Brussels opened in 1994.",
         body: "R&S produced one of the most distinctive visual marks in electronic music: a green triangle bearing a prancing horse silhouette. The label insists the mark is not associated with Ferrari but embodies the freedom of dance. The ambiguity is part of the design. A logo that invites misreading generates conversation. Ian Anderson of The Designers Republic confirmed his studio worked for both Warp and R&S, building a shared visual vernacular across two countries. The mark's cultural reach was proven when Raf Simons featured the R&S logo on oversized t-shirts at Paris Fashion Week SS20. A logo designed for 12-inch vinyl sleeves in Ghent ended up on a runway as cultural citation. From a design perspective, Belgium demonstrates that a small post-industrial economy with strong institutional arts support produces visual marks with disproportionate reach. The country's political complexity, three language communities negotiating shared identity, may explain why its labels invested heavily in symbols that communicate without words.",
     },
@@ -124,7 +124,7 @@ const SCENES = {
 // "one landscape, one portrait" throughout. The track loops seamlessly.
 const SCENE_ORDER = [
     { key: 'detroit',    label: 'Detroit',          file: 'Detroit.png',    orient: 'l' },
-    { key: 'belgium',    label: 'Ghent / Brussels', file: 'Brussels.png',   orient: 'p' },
+    { key: 'belgium',    label: 'Belgium', file: 'Brussels.png',   orient: 'p' },
     { key: 'berlin',     label: 'Berlin',           file: 'Berlin.png',     orient: 'l' },
     { key: 'birmingham', label: 'Birmingham',       file: 'Birmingham.png', orient: 'p' },
     { key: 'cologne',    label: 'Cologne',          file: 'Cologne.png',    orient: 'l' },
