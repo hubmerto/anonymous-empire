@@ -2576,3 +2576,24 @@ html body .scene-name-btn,
 html body .scene-name-sep {
     font-family: 'Megatron Sans', 'Megatron', 'Arial Black', Impact, sans-serif !important;
 }
+
+/* Desktop: About becomes two columns — pile left, text right */
+@media (min-width: 901px) {
+    .about-section {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important;
+        align-items: center !important;
+        gap: 3rem !important;
+    }
+    .about-left, .about-right { display: block !important; }
+    .about-left > #cover-pile {
+        width: 100% !important;
+        aspect-ratio: 1 / 1 !important;
+        max-height: none !important;
+        order: 0 !important;
+    }
+    .about-right > p,
+    .about-right > .about-cta,
+    .about-title { order: 0 !important; }
+    .about-title { margin-bottom: 1.5rem !important; }
+}
