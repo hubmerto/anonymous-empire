@@ -2619,3 +2619,29 @@ html body .scene-name-sep {
         max-width: 240px;
     }
 }
+
+/* Grid size switcher */
+.grid-size-group {
+    flex-direction: row !important;
+    gap: 0 !important;
+    align-items: stretch !important;
+}
+.grid-size-btn {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    padding: 0.55rem 0.75rem;
+    font: inherit;
+    font-size: 0.8rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: color 0.15s, background 0.15s, border-color 0.15s;
+}
+.grid-size-btn + .grid-size-btn { border-left: 0; }
+.grid-size-btn:hover { color: #fff; }
+.grid-size-btn.active { background: #fff; color: #000; border-color: #fff; }
+
+/* Grid size classes applied on #grid */
+.grid.size-1x { grid-template-columns: repeat(auto-fill, minmax(48px, 1fr)); }
+.grid.size-2x { grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); }
+.grid.size-3x { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }

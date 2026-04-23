@@ -355,6 +355,19 @@ function setupEventListeners() {
         document.getElementById(id).addEventListener('change', applyFilters);
     });
 
+    // Grid size switcher (1× / 2× / 3×)
+    const gridEl = document.getElementById('grid');
+    if (gridEl && !gridEl.classList.contains('size-1x')) gridEl.classList.add('size-1x');
+    document.querySelectorAll('.grid-size-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const size = btn.dataset.size;
+            document.querySelectorAll('.grid-size-btn').forEach(b => b.classList.toggle('active', b === btn));
+            if (!gridEl) return;
+            gridEl.classList.remove('size-1x', 'size-2x', 'size-3x');
+            gridEl.classList.add('size-' + size + 'x');
+        });
+    });
+
     // View tabs + nav links
     document.querySelectorAll('.view-tab, .site-nav-links a[data-view]').forEach(tab => {
         tab.addEventListener('click', (e) => {
