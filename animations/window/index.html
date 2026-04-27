@@ -46,39 +46,6 @@
         pointer-events: none;
     }
 
-    /* URL pill — overlaid on top of the toolbar SVG, in the search-bar
-       area of the chrome. The animated-typing URL renders here. */
-    .url-pill {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 56%;
-        max-width: 720px;
-        height: var(--bar-h);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 6px;
-        font-size: 13px;
-        font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
-        color: #cfd1d4;
-        letter-spacing: 0.005em;
-        white-space: nowrap;
-        pointer-events: none;
-    }
-    .url-pill svg.lock {
-        width: 12px;
-        height: 12px;
-        opacity: 0.55;
-        flex-shrink: 0;
-    }
-    .url-pill .url-text {
-        display: inline-block;
-        min-width: 1ch;
-    }
-    
-
     /* iframe stage -------------------------------------------------- */
     .stage {
         position: absolute;
@@ -117,13 +84,11 @@
     .back-link:hover { opacity: 1; }
 
     @media (prefers-reduced-motion: reduce) {
-        .url-pill .url-text::after { animation: none; opacity: 0; }
-    }
+        }
     @media (max-width: 720px) {
         body { padding: 0.5rem; }
         .window { border-radius: 8px; }
-        .url-pill { font-size: 11px; width: 70%; }
-    }
+        }
 </style>
 </head>
 <body>
@@ -132,12 +97,6 @@
     <div class="window">
         <div class="chrome">
             <img class="toolbar-bg" src="toolbar.svg" alt="">
-            <div class="url-pill" id="urlPill">
-                <svg class="lock" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                    <path fill="currentColor" d="M8 1a3.5 3.5 0 0 0-3.5 3.5V7H4a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V8a1 1 0 0 0-1-1h-.5V4.5A3.5 3.5 0 0 0 8 1zm-2 6V4.5a2 2 0 1 1 4 0V7H6z"/>
-                </svg>
-                <span class="url-text" id="urlText"></span>
-            </div>
         </div>
         <div class="stage">
             <iframe
@@ -163,29 +122,20 @@
         var params = new URLSearchParams(location.search);
         var section = params.get('section') || 'hero';
         var presets = {
-            hero:        { src: '../../?only=hero',         url: 'anonymousempire.art' },
-            scenes:      { src: '../../?only=scenes',       url: 'anonymousempire.art' },
-            ppi:         { src: '../../poverty-politics-industry/', url: 'anonymousempire.art' },
-            essays:      { src: '../../?only=ppi-essays',   url: 'anonymousempire.art' },
-            scarcity:    { src: '../../scarcity-refusal-ruin/', url: 'anonymousempire.art' },
-            about:       { src: '../../?only=about-section', url: 'anonymousempire.art' },
-            library:     { src: '../../library/',           url: 'anonymousempire.art' },
-            deck:        { src: '../../animations/deck/',   url: 'anonymousempire.art' },
+            hero:        { src: '../../?only=hero' },
+            scenes:      { src: '../../?only=scenes' },
+            ppi:         { src: '../../poverty-politics-industry/' },
+            essays:      { src: '../../?only=ppi-essays' },
+            scarcity:    { src: '../../scarcity-refusal-ruin/' },
+            about:       { src: '../../?only=about-section' },
+            library:     { src: '../../library/' },
+            deck:        { src: '../../animations/deck/' },
         };
         var preset = presets[section] || presets.hero;
         var src = params.get('src') || preset.src;
-        var url = params.get('url') || preset.url;
 
         document.getElementById('frame').src = src;
 
-        // ── Typed URL ────────────────────────────────────────────────
-        var prefix = 'https://';
-        var full = prefix + url;
-        var el  = document.getElementById('urlText');
-        var pill = document.getElementById('urlPill');
-        var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-// Static URL — no typing animation
-        el.textContent = full;
     })();
     </script>
 </body>
