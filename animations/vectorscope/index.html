@@ -39,14 +39,12 @@
         <svg id="scope" viewBox="-110 -110 220 220" xmlns="http://www.w3.org/2000/svg">
             <g class="scope-grid" id="grid"></g>
             <g id="dots"></g>
-            <g id="active"></g>
         </svg>
     </div>
 
     <script>
     (async function(){
         var dotsLayer   = document.getElementById('dots');
-        var activeLayer = document.getElementById('active');
         var gridLayer   = document.getElementById('grid');
 
         function svg(name, attrs){
@@ -112,7 +110,6 @@
 
         var meta = releases.map(function(rec){
             var a = analyze(rec);
-            a.image = rec.image;
             return a;
         });
 
@@ -127,42 +124,6 @@
             }));
         });
 
-        var activeRing = svg('circle', {
-            r: 6, fill: 'none', stroke: '#fff', 'stroke-width': 1.5, opacity: 0,
-        });
-        activeLayer.appendChild(activeRing);
-
-        var covers = meta.slice();
-        for (var i = covers.length - 1; i > 0; i--) {
-            var j = Math.floor(Math.random() * (i + 1));
-            var t = covers[i]; covers[i] = covers[j]; covers[j] = t;
-        }
-        var LOOP_MS = 20000;
-        var INTERVAL = Math.max(8, Math.floor(LOOP_MS / covers.length));
-
-        function runLoop(){
-            var k = 0;
-            var id = setInterval(function(){
-                if (k >= covers.length) {
-                    clearInterval(id);
-                    for (var i = covers.length - 1; i > 0; i--) {
-                        var jj = Math.floor(Math.random() * (i + 1));
-                        var tmp = covers[i]; covers[i] = covers[jj]; covers[jj] = tmp;
-                    }
-                    runLoop();
-                    return;
-                }
-                var m = covers[k];
-                var pos = hueXY(m.hue, Math.min(m.chroma, 100) / 100 * R);
-                activeRing.setAttribute('cx', pos.x.toFixed(2));
-                activeRing.setAttribute('cy', pos.y.toFixed(2));
-                activeRing.setAttribute('opacity', '1');
-                k++;
-            }, INTERVAL);
-        }
-
-        var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        if (!reduced) runLoop();
     })();
     </script>
 </body>
