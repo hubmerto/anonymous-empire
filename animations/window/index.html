@@ -78,6 +78,65 @@
         body { padding: 0; }
         .window { border-radius: 0; }
         }
+    /* ── iPhone-frame mode (?device=iphone) ───────────────────────── */
+    body.iphone .window {
+        height: auto;
+        width: auto;
+        max-width: none;
+        max-height: 100dvh;
+        aspect-ratio: 9 / 19.5;
+        background: #0a0a0a;
+        border-radius: 60px;
+        padding: 14px;
+        box-shadow:
+            0 0 0 1.5px #2a2a2a,
+            0 30px 80px rgba(0,0,0,0.6);
+        overflow: hidden;
+        position: relative;
+        --device-h: 100dvh;
+    }
+    body.iphone .window::before {
+        /* Dynamic island */
+        content: '';
+        position: absolute;
+        top: 24px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 36%;
+        max-width: 130px;
+        height: 32px;
+        background: #000;
+        border-radius: 999px;
+        z-index: 5;
+    }
+    body.iphone .chrome { display: none; }
+    body.iphone .stage {
+        position: absolute;
+        top: 14px;
+        left: 14px;
+        right: 14px;
+        bottom: 14px;
+        border-radius: 48px;
+        overflow: hidden;
+    }
+    body.iphone .stage iframe {
+        border-radius: inherit;
+    }
+    @media (max-width: 540px) {
+        body.iphone .window {
+            border-radius: 44px;
+            padding: 10px;
+        }
+        body.iphone .window::before {
+            top: 18px;
+            width: 38%;
+            height: 26px;
+        }
+        body.iphone .stage {
+            top: 10px; left: 10px; right: 10px; bottom: 10px;
+            border-radius: 36px;
+        }
+    }
 </style>
 </head>
 <body>
@@ -108,6 +167,10 @@
         // ?url=…&src=…         override either field directly
         var params = new URLSearchParams(location.search);
         var section = params.get('section') || 'hero';
+        var device  = params.get('device');
+        if (device === 'iphone' || device === 'mobile') {
+            document.body.classList.add('iphone');
+        }
         var presets = {
             hero:        { src: '../../?only=hero' },
             scenes:      { src: '../../?only=scenes&hide=.scenes-intro' },
