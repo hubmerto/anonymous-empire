@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Anonymous Empire · Deck</title>
+<title>Anonymous Empire · Pile</title>
 <meta name="theme-color" content="#000000">
 <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
 <style>
@@ -15,10 +15,7 @@
         font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
         color: #fff;
     }
-    body {
-        min-height: 100dvh;
-        position: relative;
-    }
+    body { min-height: 100dvh; position: relative; }
 
     .back-link {
         position: fixed;
@@ -35,7 +32,6 @@
     }
     .back-link:hover { opacity: 1; }
 
-    /* Flat top-down stage. All cards share the same centre anchor. */
     .stage {
         position: absolute;
         inset: 0;
@@ -43,78 +39,51 @@
         place-items: center;
     }
 
-    /* The "deck" is just a sized box holding the absolutely-positioned cards. */
-    .deck {
+    /* The pile is a centred frame. Cards land randomly inside it. */
+    .pile {
         position: relative;
-        /* Size scales to viewport; cards size proportionally from this. */
-        width: min(80vmin, 700px);
-        height: min(80vmin, 700px);
+        width: min(85vmin, 820px);
+        height: min(85vmin, 820px);
+        overflow: hidden;
     }
 
     .card {
         position: absolute;
         top: 50%;
         left: 50%;
-        filter: grayscale(1) contrast(1.02);
-        /* Base transform keeps every card anchored to the same centre point.
-           Web-Animations API drives the cycle from this resting transform. */
-        transform: translate3d(-50%, -50%, 0);
-        transform-origin: 50% 50%;
-        will-change: transform;
+        filter: grayscale(1) contrast(1.05);
+        transform: translate(-50%, -50%);
+        will-change: opacity, transform;
         pointer-events: none;
         user-select: none;
         display: block;
-        object-fit: contain;   /* never crop / stretch the source image */
+        opacity: 1;
+        transition: none;
+    }
+    .card.fade {
+        transition: opacity 0.5s ease;
+        opacity: 0;
     }
 
-    /* Native aspect ratios preserved: landscape 5:4 (1350×1080 source),
-       portrait 4:5 (1080×1350 source). Both reference the same common
-       dimension so landscape cards poke horizontally past portrait ones
-       and portrait cards poke vertically past landscape ones. */
-    .card.is-landscape {
-        /* 900×720 scaled to the deck box */
-        width:  100%;
-        height: 80%;
-    }
-    .card.is-portrait {
-        /* 720×900 */
-        width:  80%;
-        height: 100%;
-    }
-
-    /* Minimal loader — single hairline, pulsing */
-    .loader {
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        width: 80px;
-        height: 1px;
-        background: rgba(255,255,255,0.35);
-        transform: translate(-50%, -50%);
-        z-index: 100;
-        animation: pulse 1.2s ease-in-out infinite;
-    }
-    @keyframes pulse { 0%, 100% { opacity: 0.25; } 50% { opacity: 0.85; } }
-    .loaded .loader { display: none; }
+    /* Native aspect ratios — landscape and portrait keep their own proportions */
+    .card.is-landscape { aspect-ratio: 5 / 4; }
+    .card.is-portrait  { aspect-ratio: 4 / 5; }
 
     @media (prefers-reduced-motion: reduce) {
-        .card { animation: none !important; }
+        .card { transition: none !important; animation: none !important; }
     }
 </style>
 </head>
 <body>
     <a class="back-link" href="../../">Back</a>
-    <div class="loader" id="loader" aria-hidden="true"></div>
     <div class="stage">
-        <div class="deck" id="deck" role="img" aria-label="Looping deck of scene photographs"></div>
+        <div class="pile" id="pile" role="img" aria-label="Continuously growing pile of 21 scene photographs"></div>
     </div>
 
     <script>
     (function(){
-        // ── Source: 21 scene photos. Paths use the repo's actual dir. ──────
         var BASE = '../../Scenes_Photogrpahs/';
         var FILES = [
-            // l = landscape, p = portrait — preserve native aspect
             { file: 'Amsterdam.png',  o: 'l' },
             { file: 'Berlin.png',     o: 'l' },
             { file: 'Birmingham.png', o: 'p' },
@@ -137,153 +106,83 @@
             { file: 'Tbilisi.png',    o: 'p' },
             { file: 'Tokyo.png',      o: 'p' },
         ];
-        var DECK = document.getElementById('deck');
+        var pile = document.getElementById('pile');
+
+        // Shuffle so every reload starts in a different order
+        for (var i = FILES.length - 1; i > 0; i--) {
+            var j = Math.floor(Math.random() * (i + 1));
+            var tmp = FILES[i]; FILES[i] = FILES[j]; FILES[j] = tmp;
+        }
+
+        // Preload all 21 images so the first cycle isn't jittery
+        var loaded = 0;
+        FILES.forEach(function(f){
+            var im = new Image();
+            im.onload = im.onerror = function(){ loaded++; };
+            im.src = BASE + encodeURIComponent(f.file);
+        });
+
+        var INTERVAL = 380;     // ms between new cards landing
+        var LIFETIME = 4200;    // ms each card stays before fading
+        var FADE     = 600;     // ms of fade-out
+        var idx = 0;
+        var z = 1;
+
+        function addCard(){
+            var info = FILES[idx % FILES.length];
+            idx++;
+            var img = document.createElement('img');
+            img.className = 'card ' + (info.o === 'l' ? 'is-landscape' : 'is-portrait');
+            img.src = BASE + encodeURIComponent(info.file);
+            img.alt = '';
+            img.draggable = false;
+
+            // Size: % of pile container width. Landscape ~38% wide, portrait ~28%.
+            var basePct = (info.o === 'l' ? 38 : 28);
+            // Scale variance so cards don't all stamp identically
+            var scaleMul = 0.92 + Math.random() * 0.18;       // 0.92 – 1.10
+            var widthPct = basePct * scaleMul;
+            img.style.width = widthPct + '%';
+            img.style.height = 'auto';
+
+            // Random offset constrained so the card stays inside the frame
+            var rect = pile.getBoundingClientRect();
+            var coverPx = rect.width * (widthPct / 100);
+            var coverHpx = info.o === 'l' ? coverPx * 0.8 : coverPx * 1.25;
+            var maxDxPct = rect.width  ? ((rect.width  - coverPx)  / 2) / rect.width  * 100 : 15;
+            var maxDyPct = rect.height ? ((rect.height - coverHpx) / 2) / rect.height * 100 : 15;
+            maxDxPct = Math.max(0, maxDxPct - 2);
+            maxDyPct = Math.max(0, maxDyPct - 2);
+            var dx = (Math.random() - 0.5) * 2 * maxDxPct;
+            var dy = (Math.random() - 0.5) * 2 * maxDyPct;
+            var rot = (Math.random() - 0.5) * 12; // ±6°
+            img.style.left = 'calc(50% + ' + dx.toFixed(2) + '%)';
+            img.style.top  = 'calc(50% + ' + dy.toFixed(2) + '%)';
+            img.style.transform = 'translate(-50%, -50%) rotate(' + rot.toFixed(2) + 'deg)';
+            img.style.zIndex = String(z++);
+
+            pile.appendChild(img);
+
+            // Lifetime: fade then remove
+            setTimeout(function(){
+                img.classList.add('fade');
+                setTimeout(function(){
+                    if (img.parentNode) img.parentNode.removeChild(img);
+                }, FADE);
+            }, LIFETIME);
+        }
 
         var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-        // ── Preload all images (so first cycle isn't jittery) ──────────────
-        function preload(urls, done){
-            var pending = urls.length;
-            urls.forEach(function(u){
-                var im = new Image();
-                im.onload = im.onerror = function(){
-                    pending--;
-                    if (pending === 0) done();
-                };
-                im.src = u;
-            });
+        if (!reduced){
+            // Wait briefly so most images decode before the first land
+            setTimeout(function tick(){
+                addCard();
+                setTimeout(tick, INTERVAL);
+            }, 250);
+        } else {
+            // Static: paint the deck once with all 21 in a single layer
+            FILES.forEach(function(){ addCard(); });
         }
-
-        // ── Build cards in stack order. cards[0] is the BACK card (exits
-        //    first); cards[N-1] is the TOP card currently visible. ─────────
-        var cards = [];
-        function build(){
-            FILES.forEach(function(p, i){
-                var img = document.createElement('img');
-                img.className = 'card ' + (p.o === 'l' ? 'is-landscape' : 'is-portrait');
-                img.src = BASE + encodeURIComponent(p.file);
-                img.alt = '';
-                img.draggable = false;
-                DECK.appendChild(img);
-                cards.push(img);
-            });
-            restack();
-        }
-
-        // Assign z-index per current array order. Lowest index = back = lowest z.
-        function restack(){
-            for (var i = 0; i < cards.length; i++){
-                cards[i].style.zIndex = String(i + 1);
-            }
-        }
-
-        // ── Cycle: back card → arc out sideways → land on top ─────────────
-        var DURATION = 1100;                        // close + fast
-        var EASING   = 'cubic-bezier(0.45, 0.05, 0.25, 1)';
-        var cycleIdx = 0;
-
-        function cycleOnce(){
-            if (cards.length === 0) return;
-            var card = cards[0];                     // back card
-            var side = (cycleIdx % 2 === 0) ? -1 : 1;// 0: left, 1: right, 2: left…
-            cycleIdx++;
-
-            // Compute offset in CSS pixels so the visible gap between the
-            // compressed deck edge and the scaled-up card edge is exactly
-            // GAP_PX at peak.
-            //   deck compresses to 0.75 → effective half-width = 0.375 * deckW
-            //   card scales to 1.4      → effective half-width = 0.7   * cardW
-            var GAP_PX = 250;
-            var deckRect = DECK.getBoundingClientRect();
-            var cardRect = card.getBoundingClientRect();
-            var offsetPx = side * (
-                deckRect.width * 0.375 +   // half of compressed deck
-                GAP_PX +                   // visible empty space
-                cardRect.width * 0.7       // half of scaled card
-            );
-
-            // Whole deck breathes: compress while a card is being pulled,
-            // expand back to full size when the card lands on top.
-            // Deck shifts on the X axis in sync with the pulled card (same
-            // direction, smaller magnitude), then returns to centre as the
-            // card lands on top. ~6% of deck width is enough to read as
-            // a sympathetic slide without looking like the deck is chasing
-            // the card.
-            var deckShift = side * 6; // %
-            DECK.animate([
-                { offset: 0.00, transform: 'translateX(0%) scale(1)' },
-                { offset: 0.40, transform: 'translateX(' + deckShift + '%) scale(0.75)' },
-                { offset: 0.70, transform: 'translateX(' + deckShift + '%) scale(0.75)' },
-                { offset: 1.00, transform: 'translateX(0%) scale(1)' },
-            ], { duration: DURATION, easing: EASING, fill: 'forwards' });
-
-
-            // Keyframes for Web Animations API. Transform from current
-            // resting state → offset + scale → peak over the top → land.
-            // Size differential: 0.92 at rest → 1.25 mid-flight → back to 0.92
-            // on landing. translate3d + per-axis scale keep everything on the
-            // compositor so there's no paint flash when the card settles.
-            // Pure sideways motion — no vertical arc. Card slides out to its
-            // side, expands to 1.25 at peak, holds briefly while its z-index
-            // is raised, then slides back to centre and lands as the new top.
-            // Pure X-axis motion. No Y movement anywhere in the keyframes.
-            // No per-card scale either — the whole deck breathes instead.
-            // Pure X-axis translate. Card scale peaks at 1.4 while the deck
-            // is compressed to 0.75 — at the hold beat, the pulled card
-            // renders visibly larger than the whole stack behind it.
-            // offsetPx guarantees a 50px visible gap between the stack edge
-            // and the card edge at peak, regardless of viewport size.
-            // Phase A (0→40%)  : slide out to the side, scaling up to 1.4
-            // Phase B (40→70%) : hold at peak with z-index raised so the card
-            //                    visibly reads as the top layer
-            // Phase C (70→92%) : slide back toward centre, still at scale 1.4
-            // Phase D (92→100%): settle — scale descends to 1.0 as the card
-            //                    finishes landing on top of the deck
-            var frames = [
-                { offset: 0.00, transform: 'translate3d(-50%, -50%, 0) scale(1)' },
-                { offset: 0.40, transform: 'translate3d(calc(-50% + ' + offsetPx + 'px), -50%, 0) scale(1.4)' },
-                { offset: 0.70, transform: 'translate3d(calc(-50% + ' + offsetPx + 'px), -50%, 0) scale(1.4)' },
-                { offset: 0.92, transform: 'translate3d(-50%, -50%, 0) scale(1.08)' },
-                { offset: 1.00, transform: 'translate3d(-50%, -50%, 0) scale(1)' },
-            ];
-
-            // Raise z once the card clears the deck (mid-exit) so the travel
-            // pass reads as "over the top" without a visible pop.
-            var raiseZ = setTimeout(function(){
-                card.style.zIndex = String(cards.length + 10);
-            }, DURATION * 0.40);
-
-            var anim = card.animate(frames, {
-                duration: DURATION,
-                easing: EASING,
-                fill: 'forwards',
-            });
-
-            anim.onfinish = function(){
-                if (raiseZ) clearTimeout(raiseZ);
-                // Commit the final animated transform to inline style, then
-                // cancel the animation so fill:forwards doesn't compete with
-                // subsequent inline changes. Prevents the tiny "pop" at end.
-                try { if (anim.commitStyles) anim.commitStyles(); } catch(e){}
-                try { anim.cancel(); } catch(e){}
-                card.style.transform = 'translate3d(-50%, -50%, 0)';
-                // Rotate array and restack all z-indices in one frame.
-                cards.shift();
-                cards.push(card);
-                requestAnimationFrame(function(){
-                    restack();
-                    cycleOnce();
-                });
-            };
-        }
-
-        // ── Boot ───────────────────────────────────────────────────────────
-        preload(FILES.map(function(f){ return BASE + encodeURIComponent(f.file); }), function(){
-            document.body.classList.add('loaded');
-            build();
-            if (reduced) return; // static stack for reduced-motion users
-            setTimeout(cycleOnce, 400);
-        });
     })();
     </script>
 </body>
