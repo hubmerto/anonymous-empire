@@ -162,8 +162,18 @@
 
       // ?only=<section-id> — isolate one section for portfolio screenshots.
       (function(){
-        var only = new URLSearchParams(location.search).get('only');
+        var qp = new URLSearchParams(location.search);
+        var only = qp.get('only');
         if (!only) return;
+        // Optional ?hide=.selector1,.selector2 to hide extra elements
+        var hideSel = qp.get('hide');
+        if (hideSel) {
+          hideSel.split(',').forEach(function(sel){
+            document.querySelectorAll(sel.trim()).forEach(function(el){
+              el.style.setProperty('display', 'none', 'important');
+            });
+          });
+        }
         var keep = document.getElementById(only)
                 || document.querySelector('.' + only)
                 || document.querySelector(only);
