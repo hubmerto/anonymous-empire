@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anonymous Empire · Portfolio links</title>
+<meta name="robots" content="noindex">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+        background: #0a0a0a;
+        color: #e8e8e8;
+        font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+        min-height: 100dvh;
+        line-height: 1.5;
+    }
+    main {
+        max-width: 920px;
+        margin: 0 auto;
+        padding: 5rem 1.5rem 6rem;
+    }
+    h1 {
+        font-family: 'Arial Black', sans-serif;
+        font-size: clamp(1.5rem, 3vw, 2.25rem);
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        margin-bottom: 0.6rem;
+        color: #fff;
+    }
+    p.intro {
+        color: #888;
+        margin-bottom: 3rem;
+        max-width: 60ch;
+    }
+    h2 {
+        font-family: 'Arial Black', sans-serif;
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 0.18em;
+        color: #666;
+        margin: 2.5rem 0 1rem;
+        border-top: 1px solid #1a1a1a;
+        padding-top: 1.5rem;
+    }
+    h2:first-of-type { margin-top: 0; border: 0; padding-top: 0; }
+    table { width: 100%; border-collapse: collapse; }
+    td {
+        padding: 0.85rem 0;
+        border-bottom: 1px solid #181818;
+        vertical-align: top;
+        font-size: 0.9rem;
+    }
+    td.label { color: #fff; width: 40%; padding-right: 1.5rem; }
+    td.url a {
+        color: #888;
+        text-decoration: none;
+        word-break: break-all;
+        transition: color 0.15s;
+    }
+    td.url a:hover { color: #fff; }
+    code {
+        font-family: inherit;
+        background: #1a1a1a;
+        padding: 0.15rem 0.45rem;
+        font-size: 0.85em;
+        color: #ddd;
+    }
+    .iframe-snippet {
+        background: #111;
+        padding: 1rem 1.25rem;
+        font-size: 0.78rem;
+        color: #c8c8c8;
+        margin-top: 0.6rem;
+        white-space: pre-wrap;
+        overflow-x: auto;
+        line-height: 1.45;
+    }
+</style>
+</head>
+<body>
+<main>
+    <h1>Portfolio links</h1>
+    <p class="intro">Each row below is a standalone, full-bleed view of one section of the site — designed for screenshotting or embedding into a portfolio page. Add <code>?only=section-id</code> to the home URL to isolate any major section without nav or footer.</p>
+
+    <h2>Standalone pages</h2>
+    <table>
+        <tr><td class="label">Home (full)</td><td class="url"><a href="/" target="_blank">https://anonymousempire.art/</a></td></tr>
+        <tr><td class="label">Library (catalogue grid + filters)</td><td class="url"><a href="/library/" target="_blank">https://anonymousempire.art/library/</a></td></tr>
+        <tr><td class="label">Library — Timeline view</td><td class="url"><a href="/library/#timeline" target="_blank">/library/#timeline</a></td></tr>
+        <tr><td class="label">Library — Map view</td><td class="url"><a href="/library/#map" target="_blank">/library/#map</a></td></tr>
+        <tr><td class="label">Library — Colour view</td><td class="url"><a href="/library/#color" target="_blank">/library/#color</a></td></tr>
+        <tr><td class="label">Poverty · Politics · Industry (kinetic typography)</td><td class="url"><a href="/poverty-politics-industry/" target="_blank">/poverty-politics-industry/</a></td></tr>
+        <tr><td class="label">Scarcity · Refusal · Ruin (kinetic typography)</td><td class="url"><a href="/scarcity-refusal-ruin/" target="_blank">/scarcity-refusal-ruin/</a></td></tr>
+        <tr><td class="label">Deck (looping scene-card animation)</td><td class="url"><a href="/animations/deck/" target="_blank">/animations/deck/</a></td></tr>
+        <tr><td class="label">Imprint</td><td class="url"><a href="/impressum/" target="_blank">/impressum/</a></td></tr>
+        <tr><td class="label">Privacy</td><td class="url"><a href="/datenschutz/" target="_blank">/datenschutz/</a></td></tr>
+    </table>
+
+    <h2>Isolated home-page sections</h2>
+    <p style="color:#666; margin: -0.5rem 0 1.25rem; font-size: 0.85rem;">All chrome (nav, footer, sibling sections) is hidden — section fills the viewport.</p>
+    <table>
+        <tr><td class="label">Hero — flashing wordmark</td><td class="url"><a href="/?only=hero" target="_blank">/?only=hero</a></td></tr>
+        <tr><td class="label">Scenes — marquee + city essay + arrows</td><td class="url"><a href="/?only=scenes" target="_blank">/?only=scenes</a></td></tr>
+        <tr><td class="label">PPI kinetic typography (embedded iframe)</td><td class="url"><a href="/?only=ppi-section" target="_blank">/?only=ppi-section</a></td></tr>
+        <tr><td class="label">PPI three-column essays</td><td class="url"><a href="/?only=ppi-essays" target="_blank">/?only=ppi-essays</a></td></tr>
+        <tr><td class="label">Cursor trail frame</td><td class="url"><a href="/?only=trail-section" target="_blank">/?only=trail-section</a></td></tr>
+        <tr><td class="label">About + cover-pile animation</td><td class="url"><a href="/?only=about-section" target="_blank">/?only=about-section</a></td></tr>
+    </table>
+
+    <h2>Embed snippet (iframe)</h2>
+    <p style="color:#666; margin-bottom: 0.5rem;">Drop into any portfolio platform that accepts HTML embeds (Cargo, Framer, Webflow, Notion, Ghost):</p>
+    <pre class="iframe-snippet">&lt;iframe
+  src="https://anonymousempire.art/animations/deck/"
+  width="100%"
+  style="aspect-ratio: 1 / 1; border: 0; background: #000; display: block;"
+  loading="lazy"
+  allow="autoplay"
+  title="Scene deck — looping animation"&gt;&lt;/iframe&gt;</pre>
+    <p style="color:#666; margin-top: 0.6rem; font-size: 0.85rem;">Swap the <code>src</code> for any URL above. Use <code>aspect-ratio: 16 / 9</code> for landscape sections (hero, kinetic typography), <code>1 / 1</code> for the deck.</p>
+</main>
+</body>
+</html>

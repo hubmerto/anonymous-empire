@@ -159,6 +159,23 @@
           });
         });
       })();
+
+      // ?only=<section-id> — isolate one section for portfolio screenshots.
+      (function(){
+        var only = new URLSearchParams(location.search).get('only');
+        if (!only) return;
+        var keep = document.getElementById(only)
+                || document.querySelector('.' + only)
+                || document.querySelector(only);
+        if (!keep) return;
+        document.body.classList.add('only-mode');
+        document.querySelectorAll('body > nav, body > footer, body > section, body > header').forEach(function(el){
+          if (el !== keep) el.style.display = 'none';
+        });
+        keep.style.minHeight = '100vh';
+        keep.style.margin = '0';
+        keep.style.paddingTop = '0';
+      })();
     </script>
 </body>
 </html>
