@@ -169,15 +169,6 @@
         BUCKETS.forEach(function(b){
             var p = hueXY(b.h, R);
             gridLayer.appendChild(svg('line', { x1: 0, y1: 0, x2: p.x.toFixed(2), y2: p.y.toFixed(2) }));
-            var lp = hueXY(b.h, R + 8);
-            var t = svg('text', {
-                x: lp.x.toFixed(2),
-                y: lp.y.toFixed(2),
-                'text-anchor': 'middle',
-                'dominant-baseline': 'middle',
-            });
-            t.textContent = b.name;
-            gridLayer.appendChild(t);
         });
 
         // ── Load catalogue ────────────────────────────────────────────
