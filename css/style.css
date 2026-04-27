@@ -2457,3 +2457,20 @@ h1, h2, h3, h4,
         transition-duration: 0.01ms !important;
     }
 }
+
+/* Intro: centred horizontally on the page with a comfortable readable measure */
+.scenes-intro {
+    display: flex !important;
+    justify-content: center !important;
+    padding: 4rem 1.5rem !important;
+    margin: 0 !important;
+}
+.scenes-intro p {
+    text-align: center !important;
+    text-indent: 0 !important;
+    max-width: 65ch !important;
+    margin: 0 auto !important;
+}
+@media (max-width: 720px) {
+    .scenes-intro { padding: 3rem 1.25rem !important; }
+}
