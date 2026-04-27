@@ -2458,14 +2458,13 @@ h1, h2, h3, h4,
     }
 }
 
-/* Intro: centre the paragraph block on the page with a sensible measure.
-   Defeats the earlier .scenes-intro > * { width: 100% !important } rule
-   by forcing width: auto on the paragraph and centring via margin auto. */
+/* Intro: full-width text block — no horizontal margins, paragraph fills
+   the section edge-to-edge. */
 .scenes-intro {
     display: block !important;
     text-align: center !important;
-    padding: 4rem 1.5rem !important;
-    margin: 0 auto !important;
+    padding: 4rem 0 !important;
+    margin: 0 !important;
     width: 100% !important;
     max-width: 100% !important;
     box-sizing: border-box !important;
@@ -2474,11 +2473,12 @@ h1, h2, h3, h4,
     display: block !important;
     text-align: center !important;
     text-indent: 0 !important;
-    width: auto !important;
-    max-width: 65ch !important;
-    margin-left: auto !important;
-    margin-right: auto !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 1rem !important;
 }
 @media (max-width: 720px) {
-    .scenes-intro { padding: 3rem 1.25rem !important; }
+    .scenes-intro { padding: 3rem 0 !important; }
+    .scenes-intro p { padding: 0 0.75rem !important; }
 }
