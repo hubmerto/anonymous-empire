@@ -169,12 +169,14 @@
                 || document.querySelector(only);
         if (!keep) return;
         document.body.classList.add('only-mode');
-        document.querySelectorAll('body > nav, body > footer, body > section, body > header').forEach(function(el){
+        // Keep the nav bar visible alongside the chosen section.
+        document.querySelectorAll('body > footer, body > section, body > header').forEach(function(el){
           if (el !== keep) el.style.setProperty('display', 'none', 'important');
         });
         document.documentElement.style.setProperty('overflow', 'hidden', 'important');
         document.body.style.setProperty('overflow', 'hidden', 'important');
-        keep.style.minHeight = '100vh';
+        keep.style.setProperty('min-height', '100vh', 'important');
+        keep.style.setProperty('height', '100vh', 'important');
         keep.style.margin = '0';
         keep.style.paddingTop = '0';
       })();
