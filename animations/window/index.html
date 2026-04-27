@@ -63,6 +63,8 @@
         display: block;
         background: #0a0a0a;
         scrollbar-width: none;        /* Firefox */
+        pointer-events: none;         /* iframe reads as a still — nav doesn't navigate */
+        user-select: none;
     }
     .stage iframe::-webkit-scrollbar { display: none; }  /* WebKit */
     body, html { scrollbar-width: none; }
