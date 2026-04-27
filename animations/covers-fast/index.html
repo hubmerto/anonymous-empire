@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anonymous Empire · Covers fast loop</title>
+<meta name="theme-color" content="#000000">
+<link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+<style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+        height: 100%;
+        background: transparent;
+        overflow: hidden;
+        font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+    }
+    body { display: grid; place-items: center; min-height: 100dvh; }
+    #stage {
+        position: relative;
+        width: min(70vmin, 720px);
+        height: min(70vmin, 720px);
+    }
+    .c {
+        position: absolute;
+        top: 50%; left: 50%;
+        width: 100%; height: 100%;
+        transform: translate(-50%, -50%);
+        object-fit: cover;
+        pointer-events: none;
+        user-select: none;
+    }
+</style>
+</head>
+<body>
+    <div id="stage"></div>
+    <script>
+    (async function(){
+        var stage = document.getElementById('stage');
+        var covers = [];
+        try {
+            var r = await fetch('../../data/releases.json?cb=' + Date.now());
+            var d = await r.json();
+            covers = d.releases.map(function(x){ return x.image; }).filter(Boolean);
+        } catch(e){}
+        if (!covers.length) return;
+
+        // Shuffle so each reload starts in a different order
+        for (var i = covers.length - 1; i > 0; i--) {
+            var j = Math.floor(Math.random() * (i + 1));
+            var t = covers[i]; covers[i] = covers[j]; covers[j] = t;
+        }
+
+        var LOOP_MS = 20000;
+        var total = covers.length;
+        var INTERVAL = Math.max(8, Math.floor(LOOP_MS / total));
+
+        // Preload everything so nothing stalls mid-loop
+        covers.forEach(function(src){ var im = new Image(); im.src = '../../' + src; });
+
+        function clearStage(){
+            while (stage.firstChild) stage.removeChild(stage.firstChild);
+        }
+
+        function runLoop(){
+            clearStage();
+            var i = 0, z = 1;
+            var id = setInterval(function(){
+                if (i >= total) {
+                    clearInterval(id);
+                    for (var k = covers.length - 1; k > 0; k--) {
+                        var jj = Math.floor(Math.random() * (k + 1));
+                        var tmp = covers[k]; covers[k] = covers[jj]; covers[jj] = tmp;
+                    }
+                    runLoop();
+                    return;
+                }
+                var img = document.createElement('img');
+                img.className = 'c';
+                img.src = '../../' + covers[i];
+                img.style.zIndex = String(z++);
+                stage.appendChild(img);
+                i++;
+            }, INTERVAL);
+        }
+
+        var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (reduced) {
+            // Show one random cover, no animation
+            var img = document.createElement('img');
+            img.className = 'c';
+            img.src = '../../' + covers[0];
+            stage.appendChild(img);
+            return;
+        }
+
+        runLoop();
+    })();
+    </script>
+</body>
+</html>
