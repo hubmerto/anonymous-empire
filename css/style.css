@@ -2458,12 +2458,12 @@ h1, h2, h3, h4,
     }
 }
 
-/* Intro: full-width text block — no horizontal margins, paragraph fills
-   the section edge-to-edge. */
+/* Intro: same width as the scene-text body (1.5rem horizontal padding
+   on the wrapper, full-width paragraph inside). */
 .scenes-intro {
     display: block !important;
     text-align: center !important;
-    padding: 4rem 0 !important;
+    padding: 4rem 1.5rem !important;
     margin: 0 !important;
     width: 100% !important;
     max-width: 100% !important;
@@ -2476,9 +2476,8 @@ h1, h2, h3, h4,
     width: 100% !important;
     max-width: 100% !important;
     margin: 0 !important;
-    padding: 0 1rem !important;
+    padding: 0 !important;
 }
 @media (max-width: 720px) {
-    .scenes-intro { padding: 3rem 0 !important; }
-    .scenes-intro p { padding: 0 0.75rem !important; }
+    .scenes-intro { padding: 3rem 1.25rem !important; }
 }
