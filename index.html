@@ -170,8 +170,10 @@
         if (!keep) return;
         document.body.classList.add('only-mode');
         document.querySelectorAll('body > nav, body > footer, body > section, body > header').forEach(function(el){
-          if (el !== keep) el.style.display = 'none';
+          if (el !== keep) el.style.setProperty('display', 'none', 'important');
         });
+        document.documentElement.style.setProperty('overflow', 'hidden', 'important');
+        document.body.style.setProperty('overflow', 'hidden', 'important');
         keep.style.minHeight = '100vh';
         keep.style.margin = '0';
         keep.style.paddingTop = '0';
