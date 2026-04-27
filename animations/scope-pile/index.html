@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anonymous Empire · Scope + Pile</title>
+<meta name="theme-color" content="#000000">
+<link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+<style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+        height: 100%;
+        background: #000;
+        color: #cfcfcf;
+        font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+        overflow: hidden;
+    }
+    body {
+        min-height: 100dvh;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        align-items: center;
+        justify-items: center;
+    }
+    @media (max-width: 900px) {
+        body { grid-template-columns: 1fr; grid-template-rows: 1fr 1fr; }
+    }
+
+    /* ── Vectorscope (left) ─────────────────────────────────────────── */
+    .scope-wrap {
+        position: relative;
+        width: min(80vmin, 520px);
+        height: min(80vmin, 520px);
+    }
+    .scope-wrap svg { width: 100%; height: 100%; display: block; }
+    .scope-grid line, .scope-grid circle {
+        stroke: #232323;
+        stroke-width: 1;
+        fill: none;
+    }
+    .scope-grid circle.threshold {
+        stroke: #404040;
+        stroke-dasharray: 2 4;
+    }
+
+    /* ── Pile (right) ───────────────────────────────────────────────── */
+    .pile-wrap {
+        position: relative;
+        width: min(80vmin, 520px);
+        height: min(80vmin, 520px);
+    }
+    .c {
+        position: absolute;
+        top: 50%; left: 50%;
+        width: 100%; height: 100%;
+        transform: translate(-50%, -50%);
+        object-fit: cover;
+        pointer-events: none;
+        user-select: none;
+    }
+</style>
+</head>
+<body>
+    <div class="scope-wrap">
+        <svg viewBox="-110 -110 220 220" xmlns="http://www.w3.org/2000/svg">
+            <g class="scope-grid" id="grid"></g>
+            <g id="dots"></g>
+            <g id="active"></g>
+        </svg>
+    </div>
+    <div class="pile-wrap" id="stage"></div>
+
+    <script>
+    (async function(){
+        var stage       = document.getElementById('stage');
+        var dotsLayer   = document.getElementById('dots');
+        var activeLayer = document.getElementById('active');
+        var gridLayer   = document.getElementById('grid');
+
+        function svg(name, attrs){
+            var el = document.createElementNS('http://www.w3.org/2000/svg', name);
+            for (var k in attrs) el.setAttribute(k, attrs[k]);
+            return el;
+        }
+
+        // ── Polar grid ───────────────────────────────────────────────
+        var R = 100;
+        [25, 50, 75, 100].forEach(function(r){
+            gridLayer.appendChild(svg('circle', { cx: 0, cy: 0, r: r }));
+        });
+        var THR = 22;
+        var thr = svg('circle', { cx: 0, cy: 0, r: (THR/100)*R });
+        thr.classList.add('threshold');
+        gridLayer.appendChild(thr);
+
+        var BUCKETS = [0,30,60,90,130,170,195,225,255,285,315,340];
+        function hueXY(h, r){
+            var rad = h * Math.PI / 180;
+            return { x: r * Math.cos(rad), y: -r * Math.sin(rad) };
+        }
+        BUCKETS.forEach(function(h){
+            var p = hueXY(h, R);
+            gridLayer.appendChild(svg('line', {
+                x1: 0, y1: 0,
+                x2: p.x.toFixed(2), y2: p.y.toFixed(2),
+            }));
+        });
+
+        // ── Catalogue ────────────────────────────────────────────────
+        var releases = [];
+        try {
+            var r = await fetch('../../data/releases.json?cb=' + Date.now());
+            var d = await r.json();
+            releases = d.releases;
+        } catch(e){}
+        if (!releases.length) return;
+
+        function analyze(rec){
+            var palette = Array.isArray(rec.palette) ? rec.palette : [];
+            var primary = rec.hsl || {};
+            var sumX = 0, sumY = 0, sumW = 0, chromaTotal = 0, totalFrac = 0, lightAvg = 0;
+            palette.forEach(function(p){
+                var c = typeof p.c === 'number' ? p.c : 0;
+                var f = typeof p.frac === 'number' ? p.frac : 0;
+                var w = c * f;
+                var hRad = (p.h || 0) * Math.PI / 180;
+                sumX += Math.cos(hRad) * w;
+                sumY += Math.sin(hRad) * w;
+                sumW += w;
+                chromaTotal += c * f;
+                totalFrac += f;
+                lightAvg += (p.l || 0) * f;
+            });
+            var l = totalFrac > 0 ? lightAvg / totalFrac : (primary.l || 0);
+            var hue = 0;
+            if (sumW > 0.001) {
+                hue = Math.atan2(sumY, sumX) * 180 / Math.PI;
+                if (hue < 0) hue += 360;
+            } else if (typeof primary.h === 'number') {
+                hue = primary.h;
+            }
+            var chroma = totalFrac > 0 ? chromaTotal / totalFrac : 0;
+            return { hue: hue, chroma: chroma, l: l, hex: primary.hex || '#888' };
+        }
+
+        var meta = releases.map(function(rec){
+            var a = analyze(rec);
+            a.image = rec.image;
+            return a;
+        });
+
+        // Plot every release as a faint dot
+        meta.forEach(function(m){
+            var pos = hueXY(m.hue, Math.min(m.chroma, 100) / 100 * R);
+            dotsLayer.appendChild(svg('circle', {
+                cx: pos.x.toFixed(2),
+                cy: pos.y.toFixed(2),
+                r: 1.4,
+                fill: m.hex,
+                opacity: 0.55,
+            }));
+        });
+
+        // White ring tracks the currently-shown cover
+        var activeRing = svg('circle', {
+            r: 6, fill: 'none', stroke: '#fff', 'stroke-width': 1.5, opacity: 0,
+        });
+        activeLayer.appendChild(activeRing);
+
+        // ── Pile loop on the right ───────────────────────────────────
+        var covers = meta.slice();
+        for (var i = covers.length - 1; i > 0; i--) {
+            var j = Math.floor(Math.random() * (i + 1));
+            var t = covers[i]; covers[i] = covers[j]; covers[j] = t;
+        }
+        var LOOP_MS = 20000;
+        var INTERVAL = Math.max(8, Math.floor(LOOP_MS / covers.length));
+        covers.forEach(function(c){ var im = new Image(); im.src = '../../' + c.image; });
+
+        function clearStage(){ while (stage.firstChild) stage.removeChild(stage.firstChild); }
+
+        function runLoop(){
+            clearStage();
+            var k = 0, z = 1;
+            var id = setInterval(function(){
+                if (k >= covers.length) {
+                    clearInterval(id);
+                    for (var i = covers.length - 1; i > 0; i--) {
+                        var jj = Math.floor(Math.random() * (i + 1));
+                        var tmp = covers[i]; covers[i] = covers[jj]; covers[jj] = tmp;
+                    }
+                    runLoop();
+                    return;
+                }
+                var m = covers[k];
+                var img = document.createElement('img');
+                img.className = 'c';
+                img.src = '../../' + m.image;
+                img.style.zIndex = String(z++);
+                stage.appendChild(img);
+                var pos = hueXY(m.hue, Math.min(m.chroma, 100) / 100 * R);
+                activeRing.setAttribute('cx', pos.x.toFixed(2));
+                activeRing.setAttribute('cy', pos.y.toFixed(2));
+                activeRing.setAttribute('opacity', '1');
+                k++;
+            }, INTERVAL);
+        }
+
+        var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (reduced) {
+            var img = document.createElement('img');
+            img.className = 'c';
+            img.src = '../../' + covers[0].image;
+            stage.appendChild(img);
+            return;
+        }
+        runLoop();
+    })();
+    </script>
+</body>
+</html>
