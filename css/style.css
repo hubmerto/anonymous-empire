@@ -2458,18 +2458,26 @@ h1, h2, h3, h4,
     }
 }
 
-/* Intro: centred horizontally on the page with a comfortable readable measure */
+/* Intro: centre the paragraph block on the page with a sensible measure.
+   Defeats the earlier .scenes-intro > * { width: 100% !important } rule
+   by forcing width: auto on the paragraph and centring via margin auto. */
 .scenes-intro {
-    display: flex !important;
-    justify-content: center !important;
+    display: block !important;
+    text-align: center !important;
     padding: 4rem 1.5rem !important;
-    margin: 0 !important;
+    margin: 0 auto !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
 }
 .scenes-intro p {
+    display: block !important;
     text-align: center !important;
     text-indent: 0 !important;
+    width: auto !important;
     max-width: 65ch !important;
-    margin: 0 auto !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
 }
 @media (max-width: 720px) {
     .scenes-intro { padding: 3rem 1.25rem !important; }
