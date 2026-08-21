@@ -147,7 +147,7 @@
         <div class="stage">
             <iframe
                 id="frame"
-                src="../../?only=hero"
+                src="../../"
                 title="Anonymous Empire — Hero"
                 loading="lazy"
                 allow="autoplay"
@@ -159,25 +159,21 @@
     <script>
     (function(){
         // ── URL params ───────────────────────────────────────────────
-        // ?section=hero        loads /?only=hero        → URL "anonymousempire.art"
-        // ?section=scenes      loads /?only=scenes      → URL "anonymousempire.art/#scenes"
+        // ?section=hero/grid   loads /                 → URL "anonymousempire.art" (archive)
         // ?section=library     loads /library/          → URL "anonymousempire.art/library"
         // ?section=deck        loads /animations/deck/  → URL "anonymousempire.art/animations/deck"
         // ?section=ppi         loads /poverty-politics-industry/
         // ?url=…&src=…         override either field directly
         var params = new URLSearchParams(location.search);
-        var section = params.get('section') || 'hero';
+        var section = params.get('section') || 'grid';
         var device  = params.get('device');
         if (device === 'iphone' || device === 'mobile') {
             document.body.classList.add('iphone');
         }
         var presets = {
-            hero:        { src: '../../?only=hero' },
-            scenes:      { src: '../../?only=scenes&hide=.scenes-intro' },
+            hero:        { src: '../../' },
             ppi:         { src: '../../poverty-politics-industry/' },
-            essays:      { src: '../../?only=ppi-essays' },
             scarcity:    { src: '../../scarcity-refusal-ruin/' },
-            about:       { src: '../../?only=about-section' },
             library:     { src: '../../library/' },
             grid:        { src: '../../library/#grid' },
             timeline:    { src: '../../library/#timeline' },
@@ -185,7 +181,7 @@
             colour:      { src: '../../library/#color' },
             deck:        { src: '../../animations/deck/' },
         };
-        var preset = presets[section] || presets.hero;
+        var preset = presets[section] || presets.grid;
         var src = params.get('src') || preset.src;
 
         document.getElementById('frame').src = src;
